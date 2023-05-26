@@ -1,21 +1,18 @@
-const axios = require('axios');
+import axios from "axios"
 const AN_API_KEY = require('./config.js');
 
 
 export async function getCurrentAQIForCountries() {
   try {
-    const response = await axios.get(
-      'https://www.airnowapi.org/aq/observation/latLong/current/',
-      {
-        params: {
-          format: 'application/json',
-          latitude: 0, // Specify latitude and longitude for worldwide data
-          longitude: 0,
-          distance: 1000, // Set the distance as needed
-          API_KEY: AN_API_KEY,
-        },
-      }
-    );
+    const response = await axios.get('http://localhost:4000/api/aq/observation/latLong/current', {
+      params: {
+        format: 'application/json',
+        latitude: 0,
+        longitude: 0,
+        distance: 1000,
+        API_KEY: AN_API_KEY,
+      },
+    });
 
     // Process the response and extract the AQI data
     const aqiData = response.data.map((observation) => {

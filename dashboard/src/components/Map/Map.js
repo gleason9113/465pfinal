@@ -8,14 +8,26 @@ import {
   Sphere,
   Graticule,
 } from "react-simple-maps";
-
+import axios from "axios";
 import features from "./features.json";
 import vulnerabilityData from "./vulnerability.csv";
+import { getCurrentAQIForCountries } from '../../api';
 
 const MapChart = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await getCurrentAQIForCountries(); // Use the API function
+        console.log(response.data); // Print response data to console
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+
     csv(vulnerabilityData).then((data) => {
       setData(data);
     });

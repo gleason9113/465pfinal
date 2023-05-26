@@ -7,11 +7,11 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
-    "axios": "^1.4.0",
     "chart.js": "^4.3.0",
     "chartjs-chart-geo": "^4.2.0",
     "chroma-js": "^2.4.2",
     "d3-fetch": "^3.0.1",
+    "express": "^4.18.2",
     "leaflet": "^1.9.4",
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",
@@ -47,5 +47,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "axios": "^1.4.0"
   }
 }
