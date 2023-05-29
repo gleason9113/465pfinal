@@ -33,7 +33,7 @@ export async function getCurrentAQIForCountries() {
 }
 export const getCountries = async () => {
   try {
-    const response = await fetch('https://api.openaq.org/v2/countries');
+    const response = await fetch('https://api.openaq.org/v2/latest');
     if (!response.ok) {
       throw new Error(`Failed to fetch countries: ${response.status}  ${response.statusText}`);
     }
