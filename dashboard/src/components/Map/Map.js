@@ -57,19 +57,41 @@ const MapChart = () => {
     });
   }, []);
 
-  const getRandomColor = () => {
+  const getColor = (pm10Value) => {
+    console.log(pm10Value);
+    const colorShades = [
+      "#B3E5FC", // Good
+      "#81D4FA", // Fair
+      "#4FC3F7", // Poor
+      "#29B6F6", // Very poor
+      "#03A9F4", // Hazardous
+    ];
+  
+    if (pm10Value >= 300) {
+      return colorShades[4]; // Hazardous
+    } else if (pm10Value >= 120) {
+      return colorShades[3]; // Very poor
+    } else if (pm10Value >= 80) {
+      return colorShades[2]; // Poor
+    } else if (pm10Value >= 40) {
+      return colorShades[1]; // Fair
+    } else {
+      return colorShades[0]; // Good
+    }
+    /*
     const letters = "0123456789ABCDEF";
     let color = "#";
     for (let i = 0; i < 6; i++) {
       color += letters[Math.floor(Math.random() * 16)];
     }
     return color;
+    */
   };
 
   const handleParameterChange = (event) => {
     setParameter(event.target.value);
   };
-  
+
   return (
     <div>
       <select value={parameter} onChange={handleParameterChange}>
@@ -97,9 +119,9 @@ const MapChart = () => {
                     s.ISO3 === geo.properties.ISO_A3 ||
                     s.Country === geo.properties.NAME
                 );
-                const fill = d ? getRandomColor() : "#F5F4F6";
+                const pm10Value = d && d.measurements ? d.measurements.pm10 : null;
+                const fill = pm10Value ? getColor(pm10Value) : "#F5F4F6";
                 const countryName = geo.properties.NAME;
-
                 // Set specific color to the US (United States)
                 if (geo.properties.name === "United States") {
                   return (
