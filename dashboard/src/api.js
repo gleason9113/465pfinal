@@ -57,7 +57,7 @@ export const getAllCities = async () => {
   }
 }
 
-export const getMeasurements = async (startDate, endDate, location) => {
+export const getDateRange = async (startDate, endDate, location) => {
   try {
     // construct the URL
     const url = `https://api.openaq.org/v2/measurements?city=${encodeURIComponent(location)}&start_date=${startDate}&end_date=${endDate}`;
