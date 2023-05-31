@@ -40,7 +40,7 @@ const DetailedView = () => {
         data = await getCountryData(search);
       }
       setResults(data); // store the results
-      console.log(data); // print the results to console
+      console.log("View Data:", data); // print the results to console
     } catch (error) {
       console.error(`An error occurred: ${error}`);
     }
