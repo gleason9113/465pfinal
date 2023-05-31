@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import "./HistoricalView.css";
 import CityMap from "../Map/CityMap";
 import { getDateRange } from '../../api';
+
 const HistoricalView = () => {
 // New York City, USA: [40.7128, -74.0060]
   // Los Angeles, USA: [34.0522, -118.2437]
@@ -42,11 +43,10 @@ const HistoricalView = () => {
     try {
       const results = await getDateRange(startDate, endDate, cityName);
       console.log("Results:", results);
-      // Further processing of the results if needed
+   
     } catch (error) {
       console.log("An error occurred:", error);
-      // Handle the error accordingly
-    }
+     
   };
 
   return (
@@ -99,5 +99,6 @@ const HistoricalView = () => {
     </div>
   );
 };
+}
 
 export default HistoricalView;

@@ -39,8 +39,8 @@ const DetailedView = () => {
         console.log('Calling Country Search...');
         data = await getCountryData(search);
       }
-      setResults(data); // store the results
-      console.log("View Data:", data); // print the results to console
+      setResults(data); 
+      console.log("View Data:", data); 
     } catch (error) {
       console.error(`An error occurred: ${error}`);
     }
