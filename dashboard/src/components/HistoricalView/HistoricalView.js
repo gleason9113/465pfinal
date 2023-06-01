@@ -1,9 +1,8 @@
-import React, { useState } from "react"; 
+import React from "react";
 import { Link } from "react-router-dom";
 
 import "./HistoricalView.css";
 import CityMap from "../Map/CityMap";
-
 
 const HistoricalView = () => {
 // New York City, USA: [40.7128, -74.0060]
@@ -17,6 +16,7 @@ const HistoricalView = () => {
   // Moscow, Russia: [55.7558, 37.6176]
   // Rio de Janeiro, Brazil: [-22.9068, -43.1729]
   const cityPosition = [34.0522, -118.2437];
+
   return (
     <div className="historical-view">
       <nav className="navbar">
@@ -39,6 +39,5 @@ const HistoricalView = () => {
     </div>
   );
 };
-
 
 export default HistoricalView;
