@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 import "./MainView.css";
 import MapChart from "../Map/Map";
+import PollutantList from "../Pollutants/PollutantList";
 
 const MainView = () => {
   // Sample data to be passed to the Map component
@@ -36,6 +37,7 @@ const MainView = () => {
       <div className="main-map-container">
         <MapChart />
       </div>
+      <PollutantList />
       <div className="search-box">
         <input type="text" placeholder="Search city..." />
         <button className="search-btn">Search</button>

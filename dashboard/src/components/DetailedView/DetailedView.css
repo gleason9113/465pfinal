@@ -56,3 +56,13 @@
   width: 90%;
   height: 400px;
 }
+
+.pollutant-select-container {
+  margin-top: 2rem;
+}
+
+.pollutant-select-container select {
+  padding: 0.5rem;
+  font-size: 1.2rem;
+  border-radius: 4px;
+}

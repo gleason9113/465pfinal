@@ -11,7 +11,7 @@ import {
 
 import features from "./features.json";
 import vulnerabilityData from "./vulnerability.csv";
-import { getCountries } from '../../api';
+import { getCountries } from "../../api";
 
 const MapChart = () => {
   const [data, setData] = useState([]);
@@ -29,19 +29,22 @@ const MapChart = () => {
     "um010",
     "um025",
     "um050",
-    "um100"
+    "um100",
   ];
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await getCountries(); // Use the API function
-        const mappedData = response.results.map(result => ({
+        const mappedData = response.results.map((result) => ({
           ...result,
-          measurements: result.measurements.reduce((acc, measurement) => ({
-            ...acc,
-            [measurement.parameter]: measurement.value
-          }), {})
+          measurements: result.measurements.reduce(
+            (acc, measurement) => ({
+              ...acc,
+              [measurement.parameter]: measurement.value,
+            }),
+            {}
+          ),
         }));
         setData(mappedData);
         console.log(mappedData); // Print response data to console
@@ -69,17 +72,17 @@ const MapChart = () => {
   const handleParameterChange = (event) => {
     setParameter(event.target.value);
   };
-  
+
   return (
     <div>
-      <select value={parameter} onChange={handleParameterChange}>
+      {/* <select value={parameter} onChange={handleParameterChange}>
         <option value="">Select a parameter</option>
         {parameters.map((parameter, index) => (
           <option key={index} value={parameter}>
             {parameter}
           </option>
         ))}
-      </select>
+      </select> */}
       <ComposableMap
         projectionConfig={{
           rotate: [-10, 0, 0],
@@ -111,14 +114,15 @@ const MapChart = () => {
                   );
                 }
 
-                return <Geography key={geo.rsmKey} geography={geo} fill={fill} />;
+                return (
+                  <Geography key={geo.rsmKey} geography={geo} fill={fill} />
+                );
               })
             }
           </Geographies>
         )}
       </ComposableMap>
     </div>
-    
   );
 };
 

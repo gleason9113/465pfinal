@@ -1,0 +1,20 @@
+.pollutant-details {
+  margin-top: 2rem;
+  padding: 2rem;
+  border: 2px solid #333;
+  border-radius: 4px;
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.pollutant-details h2 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  color: #333;
+  font-size: 1.5rem;
+}
+
+.pollutant-details p {
+  color: #777;
+  font-size: 1.2rem;
+}
