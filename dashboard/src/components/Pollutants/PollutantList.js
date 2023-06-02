@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+import "./PollutantList.css";
+
 const PollutantList = ({ onPollutantSelect }) => {
   const [selectedPollutant, setSelectedPollutant] = useState("");
 

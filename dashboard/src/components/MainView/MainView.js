@@ -1,22 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 import "./MainView.css";
 import MapChart from "../Map/Map";
 import PollutantList from "../Pollutants/PollutantList";
+import PollutantDetails from "../Pollutants/PollutantDetails";
+import TopCountries from "../TopCountries/TopCountries";
 
 const MainView = () => {
-  // Sample data to be passed to the Map component
-  const countries = [
-    { country: "Country A", pm10: 25 },
-    { country: "Country B", pm10: 40 },
-    { country: "Country C", pm10: 10 },
-    // Add more country data as needed
-  ];
+  const [selectedPollutant, setSelectedPollutant] = useState("");
 
   return (
     <div className="main-view">
       <nav className="navbar">
+        <div class="header">Air Quality Dashboard</div>
         <ul className="nav-list">
           <li className="nav-item">
             <Link to="/">Main</Link>
@@ -28,19 +25,28 @@ const MainView = () => {
             <Link to="/historical">Historical</Link>
           </li>
         </ul>
+        <span></span>
       </nav>
-      <h1>Air Quality Dashboard</h1>
-      <p>
-        Welcome to the Air Quality Dashboard. Select a page from the navigation
-        bar above to explore more.
-      </p>
-      <div className="main-map-container">
-        <MapChart />
-      </div>
-      <PollutantList />
-      <div className="search-box">
-        <input type="text" placeholder="Search city..." />
-        <button className="search-btn">Search</button>
+
+      <div className="main-container">
+        <div className="list-and-detail-container">
+          <div className="pollutant-select-container">
+            <PollutantList onPollutantSelect={setSelectedPollutant} />
+
+            <div className="pollutant-details-container">
+              <PollutantDetails pollutant={selectedPollutant} />
+              <TopCountries />
+            </div>
+          </div>
+        </div>
+
+        <div className="main-map-container">
+          <div className="search-box">
+            <input type="text" placeholder="Search city..." />
+            <button className="search-btn">Search</button>
+          </div>
+          <MapChart />
+        </div>
       </div>
     </div>
   );

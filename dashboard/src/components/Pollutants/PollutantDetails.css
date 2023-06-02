@@ -1,10 +1,11 @@
 .pollutant-details {
   margin-top: 2rem;
   padding: 2rem;
-  border: 2px solid #333;
+  border: 1px solid #625c5c;
   border-radius: 4px;
   background-color: #fff;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin: 10px auto;
 }
 
 .pollutant-details h2 {
