@@ -3,6 +3,9 @@ import { Link } from "react-router-dom";
 
 import "./DetailedView.css";
 import CityMap from "../Map/CityMap";
+import PollutantDetails from "../Pollutants/PollutantDetails";
+import PollutantList from "../Pollutants/PollutantList";
+import DetailedChart from "../Charts/DetailedChart";
 
 const DetailedView = () => {
   // New York City, USA: [40.7128, -74.0060]
@@ -16,10 +19,12 @@ const DetailedView = () => {
   // Moscow, Russia: [55.7558, 37.6176]
   // Rio de Janeiro, Brazil: [-22.9068, -43.1729]
   const cityPosition = [34.0522, -118.2437];
+  const [selectedPollutant, setSelectedPollutant] = useState("");
 
   return (
     <div className="detailed-view">
       <nav className="navbar">
+        <div class="header">Air Quality Dashboard</div>
         <ul className="nav-list">
           <li className="nav-item">
             <Link to="/">Main</Link>
@@ -31,10 +36,27 @@ const DetailedView = () => {
             <Link to="/historical">Historical</Link>
           </li>
         </ul>
+        <span></span>
       </nav>
-      <h1>Detailed View</h1>
-      <div className="detailed-map-container">
-        <CityMap position={cityPosition} />
+
+      <div className="detailed-container">
+        <div className="list-and-detail-container">
+          <div className="pollutant-select-container">
+            <PollutantList onPollutantSelect={setSelectedPollutant} />
+
+            <div className="pollutant-details-container">
+              <PollutantDetails pollutant={selectedPollutant} />
+            </div>
+            <div className="search-box detail-serach-box">
+              <input type="text" placeholder="Search city..." />
+              <button className="search-btn detail-search-btn">Search</button>
+            </div>
+          </div>
+        </div>
+
+        <div className="detailed-chart-container">
+          <DetailedChart />
+        </div>
       </div>
     </div>
   );
