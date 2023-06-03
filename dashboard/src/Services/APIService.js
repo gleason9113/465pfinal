@@ -10,15 +10,13 @@ export const apiClient = axios.create({
 });
 
 export async function getAllPollutants() {
-  const allPollutants = await apiClient.get("/parameters");
-  console.log(allPollutants.data)
+  const allPollutants = await apiClient.get("/parameters?order_by=name");
   return allPollutants.data;
 }
 
-export const GetPollutantInfo = (pollutant) => {
+export const getPollutantInfo = (pollutantIdentifier) => {
   getAllPollutants()
     .then((response) => {
-      console.log(response.results);
-      return response.results.filter(parameter => parameter.name === pollutant);
+      return response.results.filter(parameter => `${parameter.name.replace("_", " ")} ${parameter.preferredMeasurement.replace("_", " ")}` === pollutantIdentifier);
     })
 }

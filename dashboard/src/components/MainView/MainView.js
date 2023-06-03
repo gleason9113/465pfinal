@@ -13,7 +13,7 @@ const MainView = () => {
   return (
     <div className="main-view">
       <nav className="navbar">
-        <div class="header">Air Quality Dashboard</div>
+        <div className="header">Air Quality Dashboard</div>
         <ul className="nav-list">
           <li className="nav-item">
             <Link to="/">Main</Link>
