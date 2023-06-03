@@ -28,7 +28,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "jest",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -50,6 +50,12 @@
     ]
   },
   "devDependencies": {
-    "fs": "^0.0.1-security"
+    "@babel/preset-env": "^7.22.4",
+    "@babel/preset-react": "^7.22.3",
+    "babel-jest": "^29.5.0",
+    "fs": "^0.0.1-security",
+    "jest": "^27.5.1",
+    "jest-react-native": "^18.0.0",
+    "react-test-renderer": "^18.2.0"
   }
 }
