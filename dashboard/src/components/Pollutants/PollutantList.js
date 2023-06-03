@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 
 import "./PollutantList.css";
+import { GetPollutantInfo } from "../../Services/APIService";
 
 const PollutantList = ({ onPollutantSelect }) => {
   const [selectedPollutant, setSelectedPollutant] = useState("");
 
   const handleChange = (e) => {
-    setSelectedPollutant(e.target.value);
-    onPollutantSelect(e.target.value);
+    if (e.target.value) {
+      setSelectedPollutant(GetPollutantInfo(e.target.value));
+      onPollutantSelect(GetPollutantInfo(e.target.value));
+    }
   };
 
   return (
