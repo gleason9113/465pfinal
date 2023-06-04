@@ -1,3 +1,8 @@
+
+import axios from "axios";
+
+const apiURL = "https://api.openaq.org/v2";
+
 export const getCountries = async () => {
   try {
     const response = await fetch('https://api.openaq.org/v2/latest');
@@ -76,3 +81,14 @@ export const getAllCities = async () => {
   }
 }
 
+export const apiClient = axios.create({
+  baseURL: apiURL,
+  headers: {
+    "accept": "applicaiton/json"
+  },
+});
+
+export async function getAllPollutants() {
+  const allPollutants = await apiClient.get("/parameters?order_by=name");
+  return allPollutants.data;
+}
