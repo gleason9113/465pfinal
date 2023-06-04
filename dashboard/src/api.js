@@ -36,8 +36,8 @@ export const getCountryData = async (country) => {
       throw new Error(`Failed to fetch data for ${country}: ${response.status}  ${response.statusText}`);
     }
     const data = await response.json();
-    console.log(data);
     const targetCountry = data.results.filter((countryData) => countryData.name === country);
+    console.log(targetCountry);
     return targetCountry;
   } catch (error) {
     console.log(`An error occurred: ${error}`);
