@@ -47,7 +47,7 @@ const MapChart = () => {
           ),
         }));
         setData(mappedData);
-        console.log(mappedData); // Print response data to console
+        // console.log(mappedData); // Print response data to console
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -61,7 +61,7 @@ const MapChart = () => {
   }, []);
 
   const getColor = (pm10Value) => {
-    console.log(pm10Value);
+    //console.log(pm10Value);
     const colorShades = [
       "#B3E5FC", // Good
       "#81D4FA", // Fair
@@ -69,7 +69,7 @@ const MapChart = () => {
       "#29B6F6", // Very poor
       "#03A9F4", // Hazardous
     ];
-  
+
     if (pm10Value >= 300) {
       return colorShades[4]; // Hazardous
     } else if (pm10Value >= 120) {
