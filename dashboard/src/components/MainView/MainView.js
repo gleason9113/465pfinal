@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import "./MainView.css";
@@ -6,14 +6,25 @@ import MapChart from "../Map/Map";
 import PollutantList from "../Pollutants/PollutantList";
 import PollutantDetails from "../Pollutants/PollutantDetails";
 import TopCountries from "../TopCountries/TopCountries";
+import { getAllPollutants } from "../../api";
 
 const MainView = () => {
   const [selectedPollutant, setSelectedPollutant] = useState("");
+  const [allPollutants, setAllPollutants] = useState();
+
+  const fetchAllPollutants = () => {
+    getAllPollutants()
+      .then((response) => setAllPollutants(response.results));
+  }
+
+  useEffect(() => {
+    fetchAllPollutants();
+  }, [])
 
   return (
     <div className="main-view">
       <nav className="navbar">
-        <div class="header">Air Quality Dashboard</div>
+        <div className="header">Air Quality Dashboard</div>
         <ul className="nav-list">
           <li className="nav-item">
             <Link to="/">Main</Link>
@@ -31,8 +42,14 @@ const MainView = () => {
       <div className="main-container">
         <div className="list-and-detail-container">
           <div className="pollutant-select-container">
-            <PollutantList onPollutantSelect={setSelectedPollutant} />
-
+            <PollutantList
+              pollutants={allPollutants}
+              onPollutantSelect={id => {
+                const currPollutant = allPollutants.filter(pollutant => Number(pollutant.id) === Number(id));
+                setSelectedPollutant(currPollutant[0]);
+              }}
+            />
+            {console.log(selectedPollutant.description)}
             <div className="pollutant-details-container">
               <PollutantDetails pollutant={selectedPollutant} />
               <TopCountries />
