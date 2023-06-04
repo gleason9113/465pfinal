@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from "react";
-
+import React, { useState } from "react";
 import "./PollutantList.css";
-import { getAllPollutants } from "../../api.js";
 
-const PollutantList = ({ onPollutantSelect }) => {
-  const [selectedPollutant, setSelectedPollutant] = useState("");
-  const [allPollutants, setAllPollutants] = useState();
+const PollutantList = ({ pollutants = [], onPollutantSelect }) => {
+  const [selectedPollutant, setSelectedPollutant] = useState();
+  /* const [allPollutants, setAllPollutants] = useState();
 
   const fetchAllPollutants = () => {
     getAllPollutants()
@@ -14,7 +12,7 @@ const PollutantList = ({ onPollutantSelect }) => {
 
   useEffect(() => {
     fetchAllPollutants();
-  }, [])
+  }, []) */
 
   const handleChange = (e) => {
     setSelectedPollutant(e.target.value);
@@ -23,18 +21,18 @@ const PollutantList = ({ onPollutantSelect }) => {
 
   return (
     <div className="pollutant-select-container">
-      <select value={selectedPollutant} onChange={handleChange}>
+      <select value={selectedPollutant} onChange={e => handleChange(e)}>
         <option value="">Select a pollutant</option>
-        {allPollutants?.map(pollutant => (
+        {pollutants.map((pollutant, key) => (
           <option
-            key={pollutant.id}
-            value={`${pollutant.name.replace("_", " ")} ${pollutant.preferredUnit.replace("_", " ")}`}
+            key={key}
+            value={pollutant.id}
           >
             {pollutant.displayName !== null
               ?
-              pollutant.displayName
+              `${pollutant.displayName}(${pollutant.preferredUnit.replace("_", " ")})`
               :
-              pollutant.name.replace("_", " ")}({pollutant.preferredUnit.replace("_", " ")})
+              `${pollutant.name.replace("_", " ")}(${pollutant.preferredUnit.replace("_", " ")})`}
           </option>
         ))}
       </select>
