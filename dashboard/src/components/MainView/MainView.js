@@ -6,12 +6,20 @@ import MapChart from "../Map/Map";
 import PollutantList from "../Pollutants/PollutantList";
 import PollutantDetails from "../Pollutants/PollutantDetails";
 import TopCountries from "../TopCountries/TopCountries";
-import { getAllPollutants } from "../../api";
+import { getCityData } from "../../api";
 
 const MainView = () => {
   const [selectedPollutant, setSelectedPollutant] = useState("");
-  const [allPollutants, setAllPollutants] = useState();
+  const [searchedCity, setSearchedCity] = useState("");
+  const [cityData, setCityData] = useState("");
 
+  const onSearchButtonClick = async () => {
+    const result = await getCityData(searchedCity)
+      .then(response => response.results)
+    setCityData(result[0]);
+    console.log(cityData);
+  }
+  
   const fetchAllPollutants = () => {
     getAllPollutants()
       .then((response) => setAllPollutants(response.results));
@@ -59,8 +67,8 @@ const MainView = () => {
 
         <div className="main-map-container">
           <div className="search-box">
-            <input type="text" placeholder="Search city..." />
-            <button className="search-btn">Search</button>
+            <input id="cityName" name="cityName" value={searchedCity} onChange={e => setSearchedCity(e.target.value)} type="text" placeholder="Search city..." />
+            <button className="search-btn" onClick={onSearchButtonClick}>Search</button>
           </div>
           <MapChart />
         </div>

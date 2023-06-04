@@ -6,6 +6,7 @@ import CityMap from "../Map/CityMap";
 import PollutantDetails from "../Pollutants/PollutantDetails";
 import PollutantList from "../Pollutants/PollutantList";
 import DetailedChart from "../Charts/DetailedChart";
+import { getCityData, getCountryData } from "../../api";
 
 const DetailedView = () => {
   // New York City, USA: [40.7128, -74.0060]
@@ -20,6 +21,39 @@ const DetailedView = () => {
   // Rio de Janeiro, Brazil: [-22.9068, -43.1729]
   const cityPosition = [34.0522, -118.2437];
   const [selectedPollutant, setSelectedPollutant] = useState("");
+  const [searchedValue, setSearchedValue] = useState("");
+  const [locationData, setLocationData] = useState("");
+  const [searchSelection, setSearchSelection] = useState("");
+
+  const fetchCityData = async () => {
+    const results = await getCityData(searchedValue)
+      .then(response => response.results);
+    console.log(results[0]);
+    return results[0];
+  }
+
+  const fetchCountryData = async () => {
+    const results = await getCountryData(searchedValue)
+      .then(response => response)
+    console.log(results[0]);
+    return results[0];
+  }
+
+  const onSearchButtonClick = async () => {
+    setLocationData(
+      searchSelection === "city"
+        ?
+        fetchCityData()
+        :
+        fetchCountryData()
+    );
+    console.log(locationData);
+
+  }
+
+  const handleChange = (e) => {
+    setSearchSelection(e.target.value);
+  }
 
   return (
     <div className="detailed-view">
@@ -48,8 +82,13 @@ const DetailedView = () => {
               <PollutantDetails pollutant={selectedPollutant} />
             </div>
             <div className="search-box detail-serach-box">
-              <input type="text" placeholder="Search city..." />
-              <button className="search-btn detail-search-btn">Search</button>
+              <select value={searchSelection} onChange={e => handleChange(e)}>
+                <option value="">Select search parameter</option>
+                <option value={"city"}>City</option>
+                <option value={"country"}>Country</option>
+              </select>
+              <input id="cityName" name="cityName" value={searchedValue} onChange={e => setSearchedValue(e.target.value)} type="text" placeholder="Search..." />
+              <button className="search-btn" onClick={onSearchButtonClick}>Search</button>
             </div>
           </div>
         </div>
