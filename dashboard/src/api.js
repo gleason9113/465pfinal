@@ -35,7 +35,7 @@ export const getCityData = async (city) => {
 
 export const getCountryData = async (country) => {
   try {
-    const url = 'https://api.openaq.org/v2/countries';
+    const url = 'https://api.openaq.org/v2/countries?limit=200';
     const response = await fetch(url);
     if (!response.ok) {
       throw new Error(`Failed to fetch data for ${country}: ${response.status}  ${response.statusText}`);
