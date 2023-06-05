@@ -3,13 +3,14 @@ import axios from "axios";
 
 const apiURL = "https://api.openaq.org/v2";
 
-export const getCountries = async () => {
+export const getCountries = async (parameter) => {
   try {
-    const response = await fetch('https://api.openaq.org/v2/latest');
+    const response = await fetch(`https://api.openaq.org/v2/latest?parameter=${encodeURIComponent(parameter)}`);
     if (!response.ok) {
       throw new Error(`Failed to fetch countries: ${response.status}  ${response.statusText}`);
     }
     const data = await response.json();
+    console.log(data);
     return data;
   } catch (error) {
     console.log(`An error occurred: ${error}`);

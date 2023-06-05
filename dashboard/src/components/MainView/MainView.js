@@ -16,7 +16,7 @@ const MainView = () => {
 
   const onSearchButtonClick = async () => {
     const result = await getCityData(searchedCity)
-      .then(response => response.results)
+      .then(response => response.results);
     setCityData(result[0]);
     console.log(cityData);
   }
@@ -70,7 +70,7 @@ const MainView = () => {
             <input id="cityName" name="cityName" value={searchedCity} onChange={e => setSearchedCity(e.target.value)} type="text" placeholder="Search city..." />
             <button className="search-btn" onClick={onSearchButtonClick}>Search</button>
           </div>
-          <MapChart />
+          <MapChart parameter={selectedPollutant} />
         </div>
       </div>
     </div>
