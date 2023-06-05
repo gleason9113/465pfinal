@@ -22,7 +22,7 @@ const MainView = () => {
   }
 
   const fetchAllPollutants = () => {
-    getAllPollutants
+    getAllPollutants()
       .then((response) => setAllPollutants(response.results));
   }
 
@@ -58,7 +58,6 @@ const MainView = () => {
                 setSelectedPollutant(currPollutant[0]);
               }}
             />
-            {console.log(selectedPollutant.description)}
             <div className="pollutant-details-container">
               <PollutantDetails pollutant={selectedPollutant} />
               <TopCountries />
