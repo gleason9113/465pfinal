@@ -50,6 +50,29 @@ export const getCountryData = async (country) => {
   }
 };
 
+export const getCurrentData = async () => {
+  try {
+    const url = 'https://api.openaq.org/v2/latest?limit=6000';
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch data: ${response.status}  ${response.statusText}`);
+    }
+    const data = await response.json();
+    let currentData = {};
+    for (let result of data.results) {
+      if (!currentData[result.country]) {
+        console.log("Adding: ", result.country);
+        currentData[result.country] = result;
+      }
+    }
+    return currentData;
+  } catch (error) {
+    console.log(`An error occurred: ${error}`);
+    throw error;
+  }
+}
+
+
 export const getDateRange = async (startDate, endDate, location) => {
   try {
     // construct the URL
@@ -69,7 +92,7 @@ export const getDateRange = async (startDate, endDate, location) => {
 
 export const getAllCities = async () => {
   try {
-    const response = await fetch('https://api.openaq.org/v2/cities');
+    const response = await fetch('https://api.openaq.org/v2/cities?limit=2000');
     if (!response.ok) {
       throw new Error(`Failed to fetch countries: ${response.status}  ${response.statusText}`);
     }
