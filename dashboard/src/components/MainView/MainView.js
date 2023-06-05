@@ -6,11 +6,10 @@ import MapChart from "../Map/Map";
 import PollutantList from "../Pollutants/PollutantList";
 import PollutantDetails from "../Pollutants/PollutantDetails";
 import TopCountries from "../TopCountries/TopCountries";
-import { getAllPollutants, getCityData } from "../../api";
+import { getCityData } from "../../api";
 
-const MainView = () => {
+const MainView = ({ allPollutants = [] }) => {
   const [selectedPollutant, setSelectedPollutant] = useState("");
-  const [allPollutants, setAllPollutants] = useState();
   const [searchedCity, setSearchedCity] = useState("");
   const [cityData, setCityData] = useState("");
 
@@ -20,15 +19,6 @@ const MainView = () => {
     setCityData(result[0]);
     console.log(cityData);
   }
-
-  const fetchAllPollutants = () => {
-    getAllPollutants()
-      .then((response) => setAllPollutants(response.results));
-  }
-
-  useEffect(() => {
-    fetchAllPollutants();
-  }, [])
 
   return (
     <div className="main-view">

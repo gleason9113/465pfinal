@@ -2,13 +2,12 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 import "./DetailedView.css";
-import CityMap from "../Map/CityMap";
 import PollutantDetails from "../Pollutants/PollutantDetails";
 import PollutantList from "../Pollutants/PollutantList";
 import DetailedChart from "../Charts/DetailedChart";
 import { getCityData, getCountryData } from "../../api";
 
-const DetailedView = () => {
+const DetailedView = ({ allPollutants = [] }) => {
   // New York City, USA: [40.7128, -74.0060]
   // Los Angeles, USA: [34.0522, -118.2437]
   // London, UK: [51.5074, -0.1278]
@@ -58,7 +57,7 @@ const DetailedView = () => {
   return (
     <div className="detailed-view">
       <nav className="navbar">
-        <div class="header">Air Quality Dashboard</div>
+        <div className="header">Air Quality Dashboard</div>
         <ul className="nav-list">
           <li className="nav-item">
             <Link to="/">Main</Link>
@@ -76,7 +75,13 @@ const DetailedView = () => {
       <div className="detailed-container">
         <div className="list-and-detail-container">
           <div className="pollutant-select-container">
-            <PollutantList onPollutantSelect={setSelectedPollutant} />
+            <PollutantList
+              pollutants={allPollutants}
+              onPollutantSelect={id => {
+                const currPollutant = allPollutants.filter(pollutant => Number(pollutant.id) === Number(id));
+                setSelectedPollutant(currPollutant[0]);
+              }}
+            />
 
             <div className="pollutant-details-container">
               <PollutantDetails pollutant={selectedPollutant} />
