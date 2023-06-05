@@ -13,6 +13,7 @@ const MainView = () => {
   const [allPollutants, setAllPollutants] = useState();
   const [searchedCity, setSearchedCity] = useState("");
   const [cityData, setCityData] = useState("");
+  const [pollutantID, setPollutantID] = useState();
 
   const onSearchButtonClick = async () => {
     const result = await getCityData(searchedCity)
@@ -56,6 +57,7 @@ const MainView = () => {
               onPollutantSelect={id => {
                 const currPollutant = allPollutants.filter(pollutant => Number(pollutant.id) === Number(id));
                 setSelectedPollutant(currPollutant[0]);
+                setPollutantID(selectedPollutant ? selectedPollutant.id : null);
               }}
             />
             <div className="pollutant-details-container">
@@ -70,7 +72,7 @@ const MainView = () => {
             <input id="cityName" name="cityName" value={searchedCity} onChange={e => setSearchedCity(e.target.value)} type="text" placeholder="Search city..." />
             <button className="search-btn" onClick={onSearchButtonClick}>Search</button>
           </div>
-          <MapChart parameter={selectedPollutant} />
+          <MapChart parameter={pollutantID} />
         </div>
       </div>
     </div>
