@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { VictoryBar, VictoryChart, VictoryAxis, VictoryTheme } from "victory";
 import "./DetailedChart.css";
 
-const DetailedChart = () => {
+const DetailedChart = ({ locationData }) => {
   // Sample data
   const data = [
     { pollutant: "humidity", value: 60 },

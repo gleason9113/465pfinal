@@ -18,7 +18,6 @@ function App() {
 
   useEffect(() => {
     fetchAllPollutants();
-    console.log(allPollutants);
   }, [])
   return (
     <Router>

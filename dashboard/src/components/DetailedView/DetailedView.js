@@ -5,7 +5,7 @@ import "./DetailedView.css";
 import PollutantDetails from "../Pollutants/PollutantDetails";
 import PollutantList from "../Pollutants/PollutantList";
 import DetailedChart from "../Charts/DetailedChart";
-import { getCityData, getCountryData } from "../../api";
+import { getCityData, getCountryData, getLatestCityData, getLatestCountryData } from "../../api";
 
 const DetailedView = ({ allPollutants = [] }) => {
   // New York City, USA: [40.7128, -74.0060]
@@ -23,31 +23,83 @@ const DetailedView = ({ allPollutants = [] }) => {
   const [searchedValue, setSearchedValue] = useState("");
   const [locationData, setLocationData] = useState("");
   const [searchSelection, setSearchSelection] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
-  const fetchCityData = async () => {
-    const results = await getCityData(searchedValue)
-      .then(response => response.results);
-    console.log(results[0]);
-    return results[0];
-  }
-
-  const fetchCountryData = async () => {
-    const results = await getCountryData(searchedValue)
-      .then(response => response)
-    console.log(results[0]);
-    return results[0];
-  }
+  /*   const fetchCityData = async () => {
+      const mappedData = await getLatestCityData(searchedValue)
+        .then(response => {
+          response.results.map((result) => ({
+            ...result,
+            measurements: result.measurements.reduce(
+              (acc, measurement) => ({
+                ...acc,
+                [measurement.parameter]: measurement.value,
+              }),
+              {}
+            ),
+          }))
+        });
+      setLocationData(mappedData);
+    }
+  
+    const fetchCountryData = async () => {
+      const mappedData = await getLatestCountryData(searchedValue)
+        .then(response => {
+          response.results.map((result) => ({
+            ...result,
+            measurements: result.measurements.reduce(
+              (acc, measurement) => ({
+                ...acc,
+                [measurement.parameter]: measurement.value,
+              }),
+              {}
+            ),
+          }))
+        });
+      setLocationData(mappedData);
+    } */
 
   const onSearchButtonClick = async () => {
-    setLocationData(
-      searchSelection === "city"
-        ?
-        fetchCityData()
-        :
-        fetchCountryData()
-    );
-    console.log(locationData);
-
+    setIsLoading(true);
+    if (searchSelection === "city") {
+      try {
+        const response = await getLatestCityData(searchedValue);
+        const mappedData = response.results.map((result) => ({
+          ...result,
+          measurements: result.measurements.reduce(
+            (acc, measurement) => ({
+              ...acc,
+              [measurement.parameter]: measurement.value,
+            }),
+            {}
+          ),
+        }));
+        setLocationData(mappedData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    } else if (searchSelection === "country") {
+      try {
+        const response = await getLatestCountryData(searchedValue);
+        const mappedData = response.results.map((result) => ({
+          ...result,
+          measurements: result.measurements.reduce(
+            (acc, measurement) => ({
+              ...acc,
+              [measurement.parameter]: measurement.value,
+            }),
+            {}
+          ),
+        }));
+        setLocationData(mappedData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
   }
 
   const handleChange = (e) => {
@@ -56,6 +108,7 @@ const DetailedView = ({ allPollutants = [] }) => {
 
   return (
     <div className="detailed-view">
+      {!isLoading && console.log(locationData)}
       <nav className="navbar">
         <div className="header">Air Quality Dashboard</div>
         <ul className="nav-list">
@@ -99,7 +152,9 @@ const DetailedView = ({ allPollutants = [] }) => {
         </div>
 
         <div className="detailed-chart-container">
-          <DetailedChart />
+          {!isLoading &&
+            <DetailedChart locationData={locationData} />
+          }
         </div>
       </div>
     </div>
