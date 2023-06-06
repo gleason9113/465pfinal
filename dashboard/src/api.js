@@ -25,7 +25,36 @@ export const getCityData = async (city) => {
       throw new Error(`Failed to fetch data for ${city}: ${response.status}  ${response.statusText}`);
     }
     const data = await response.json();
-    console.log(data);
+    return data;
+  } catch (error) {
+    console.log(`An error occurred: ${error}`);
+    throw error;
+  }
+}
+
+export const getLatestCityData = async (city) => {
+  try {
+    const url = `https://api.openaq.org/v2/latest?limit=1&city=${encodeURIComponent(city)}`;
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch data for ${city}: ${response.status}  ${response.statusText}`);
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(`An error occurred: ${error}`);
+    throw error;
+  }
+}
+
+export const getLatestCountryData = async (country) => {
+  try {
+    const url = `https://api.openaq.org/v2/latest?limit=1&country=${encodeURIComponent(country)}`;
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch data for ${country}: ${response.status}  ${response.statusText}`);
+    }
+    const data = await response.json();
     return data;
   } catch (error) {
     console.log(`An error occurred: ${error}`);
@@ -42,7 +71,6 @@ export const getCountryData = async (country) => {
     }
     const data = await response.json();
     const targetCountry = data.results.filter((countryData) => countryData.name === country);
-    console.log(targetCountry);
     return targetCountry;
   } catch (error) {
     console.log(`An error occurred: ${error}`);
