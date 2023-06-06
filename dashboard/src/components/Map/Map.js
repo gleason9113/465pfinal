@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { scaleQuantile, scaleLinear } from "d3-scale";
 import {
   ComposableMap,
   Geographies,

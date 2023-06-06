@@ -5,10 +5,9 @@ import "./DetailedView.css";
 import PollutantDetails from "../Pollutants/PollutantDetails";
 import PollutantList from "../Pollutants/PollutantList";
 import DetailedChart from "../Charts/DetailedChart";
-import { getCityData, getCountryData, getLatestCityData, getLatestCountryData } from "../../api";
+import { getLatestCityData, getLatestCountryData } from "../../api";
 
 const DetailedView = ({ allPollutants = [] }) => {
-  const cityPosition = [34.0522, -118.2437];
   const [selectedPollutant, setSelectedPollutant] = useState("");
   const [searchedValue, setSearchedValue] = useState("");
   const [locationData, setLocationData] = useState("");
