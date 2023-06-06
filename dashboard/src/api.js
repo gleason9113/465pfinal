@@ -55,7 +55,6 @@ export const getLatestCountryData = async (country) => {
       throw new Error(`Failed to fetch data for ${country}: ${response.status}  ${response.statusText}`);
     }
     const data = await response.json();
-    console.log(data);
     return data;
   } catch (error) {
     console.log(`An error occurred: ${error}`);

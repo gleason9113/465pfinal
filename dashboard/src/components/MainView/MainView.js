@@ -17,7 +17,6 @@ const MainView = ({ allPollutants = [] }) => {
     const result = await getCityData(searchedCity)
       .then(response => response.results);
     setCityData(result[0]);
-    console.log(cityData);
   }
 
   return (

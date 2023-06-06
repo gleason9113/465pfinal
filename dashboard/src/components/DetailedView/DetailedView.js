@@ -8,56 +8,12 @@ import DetailedChart from "../Charts/DetailedChart";
 import { getCityData, getCountryData, getLatestCityData, getLatestCountryData } from "../../api";
 
 const DetailedView = ({ allPollutants = [] }) => {
-  // New York City, USA: [40.7128, -74.0060]
-  // Los Angeles, USA: [34.0522, -118.2437]
-  // London, UK: [51.5074, -0.1278]
-  // Paris, France: [48.8566, 2.3522]
-  // Berlin, Germany: [52.5200, 13.4050]
-  // Sydney, Australia: [-33.8688, 151.2093]
-  // Tokyo, Japan: [35.6895, 139.6917]
-  // Dubai, UAE: [25.2048, 55.2708]
-  // Moscow, Russia: [55.7558, 37.6176]
-  // Rio de Janeiro, Brazil: [-22.9068, -43.1729]
   const cityPosition = [34.0522, -118.2437];
   const [selectedPollutant, setSelectedPollutant] = useState("");
   const [searchedValue, setSearchedValue] = useState("");
   const [locationData, setLocationData] = useState("");
   const [searchSelection, setSearchSelection] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
-  /*   const fetchCityData = async () => {
-      const mappedData = await getLatestCityData(searchedValue)
-        .then(response => {
-          response.results.map((result) => ({
-            ...result,
-            measurements: result.measurements.reduce(
-              (acc, measurement) => ({
-                ...acc,
-                [measurement.parameter]: measurement.value,
-              }),
-              {}
-            ),
-          }))
-        });
-      setLocationData(mappedData);
-    }
-  
-    const fetchCountryData = async () => {
-      const mappedData = await getLatestCountryData(searchedValue)
-        .then(response => {
-          response.results.map((result) => ({
-            ...result,
-            measurements: result.measurements.reduce(
-              (acc, measurement) => ({
-                ...acc,
-                [measurement.parameter]: measurement.value,
-              }),
-              {}
-            ),
-          }))
-        });
-      setLocationData(mappedData);
-    } */
 
   const onSearchButtonClick = async () => {
     setIsLoading(true);
@@ -108,7 +64,6 @@ const DetailedView = ({ allPollutants = [] }) => {
 
   return (
     <div className="detailed-view">
-      {!isLoading && console.log(locationData)}
       <nav className="navbar">
         <div className="header">Air Quality Dashboard</div>
         <ul className="nav-list">
