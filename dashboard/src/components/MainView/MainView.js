@@ -1,23 +1,38 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import "./MainView.css";
 import MapChart from "../Map/Map";
 import PollutantList from "../Pollutants/PollutantList";
 import PollutantDetails from "../Pollutants/PollutantDetails";
 import TopCountries from "../TopCountries/TopCountries";
-import { getCityData } from "../../api";
 
 const MainView = ({ allPollutants = [] }) => {
+  const navigate = useNavigate();
   const [selectedPollutant, setSelectedPollutant] = useState("");
-  const [searchedCity, setSearchedCity] = useState("");
-  const [cityData, setCityData] = useState("");
+  const [searchValue, setSearchValue] = useState("");
+  const [searchType, setSearchType] = useState("");
+
+
+  const searchOptions = [
+    { value: '', label: 'Select search parameter' },
+    { value: 'city', label: 'City' },
+    { value: 'country', label: 'Country' },
+  ];
 
   const onSearchButtonClick = async () => {
-    const result = await getCityData(searchedCity)
-      .then(response => response.results);
-    setCityData(result[0]);
+    navigate("/detailed", {
+      state: {
+        searchedValue: searchValue,
+        searchedType: searchType,
+        allPollutants: allPollutants
+      }
+    });
   }
+
+  const handleChange = (event) => {
+    setSearchType(event.target.value);
+  };
 
   return (
     <div className="main-view">
@@ -26,9 +41,6 @@ const MainView = ({ allPollutants = [] }) => {
         <ul className="nav-list">
           <li className="nav-item">
             <Link to="/">Main</Link>
-          </li>
-          <li className="nav-item">
-            <Link to="/detailed">Detailed</Link>
           </li>
           <li className="nav-item">
             <Link to="/historical">Historical</Link>
@@ -55,8 +67,15 @@ const MainView = ({ allPollutants = [] }) => {
         </div>
 
         <div className="main-map-container">
-          <div className="search-box">
-            <input id="cityName" name="cityName" value={searchedCity} onChange={e => setSearchedCity(e.target.value)} type="text" placeholder="Search city..." />
+          <div className="search-box detail-search-box">
+            <select value={searchType} onChange={handleChange}>
+              {searchOptions.map(option => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+            <input id="cityName" name="cityName" value={searchValue} onChange={e => setSearchValue(e.target.value)} type="text" placeholder="Search..." />
             <button className="search-btn" onClick={onSearchButtonClick}>Search</button>
           </div>
           <MapChart />

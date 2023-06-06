@@ -1,16 +1,18 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 
 import "./DetailedView.css";
 import PollutantDetails from "../Pollutants/PollutantDetails";
 import PollutantList from "../Pollutants/PollutantList";
 import DetailedChart from "../Charts/DetailedChart";
-import { getCityData, getCountryData } from "../../api";
+import { getLatestCityData, getLatestCountryData } from "../../api";
 
 const DetailedView = ({ allPollutants = [] }) => {
+  const location = useLocation();
+  const [pollutants, setPollutants] = useState([]);
   const [selectedPollutant, setSelectedPollutant] = useState("");
   const [searchValue, setSearchValue] = useState("");
-  const [fetchedLocationData, setFetchedLocationData] = useState("");
+  const [fetchedLocationData, setFetchedLocationData] = useState([]);
   const [searchType, setSearchType] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -39,16 +41,33 @@ const DetailedView = ({ allPollutants = [] }) => {
   };
 
   const onSearchButtonClick = async () => {
-    if (searchType === "city") {
-      await fetchData(getCityData);
-    } else if (searchType === "country") {
-      await fetchData(getCountryData);
-    }
+    incomingState();
   }
 
   const handleChange = (event) => {
     setSearchType(event.target.value);
   };
+
+  const incomingState = async () => {
+    if (searchType === "city") {
+      await fetchData(getLatestCityData);
+    } else if (searchType === "country") {
+      await fetchData(getLatestCountryData);
+    }
+  }
+
+  useEffect(() => {
+    setPollutants(location.state.allPollutants);
+    setSearchValue(location.state.searchedValue);
+    setSearchType(location.state.searchedType);
+    incomingState();
+  }, []);
+
+  useEffect(() => {
+    if (searchValue && searchType) {
+      incomingState();
+    }
+  }, [searchValue, searchType]);
 
   return (
     <div className="detailed-view">
@@ -57,9 +76,6 @@ const DetailedView = ({ allPollutants = [] }) => {
         <ul className="nav-list">
           <li className="nav-item">
             <Link to="/">Main</Link>
-          </li>
-          <li className="nav-item">
-            <Link to="/detailed">Detailed</Link>
           </li>
           <li className="nav-item">
             <Link to="/historical">Historical</Link>
@@ -72,9 +88,9 @@ const DetailedView = ({ allPollutants = [] }) => {
         <div className="list-and-detail-container">
           <div className="pollutant-select-container">
             <PollutantList
-              pollutants={allPollutants}
+              pollutants={pollutants}
               onPollutantSelect={id => {
-                const currPollutant = allPollutants.filter(pollutant => Number(pollutant.id) === Number(id));
+                const currPollutant = pollutants.filter(pollutant => Number(pollutant.id) === Number(id));
                 setSelectedPollutant(currPollutant[0]);
               }}
             />
