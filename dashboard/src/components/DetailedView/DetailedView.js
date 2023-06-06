@@ -5,7 +5,7 @@ import "./DetailedView.css";
 import PollutantDetails from "../Pollutants/PollutantDetails";
 import PollutantList from "../Pollutants/PollutantList";
 import DetailedChart from "../Charts/DetailedChart";
-import { getLatestCityData, getLatestCountryData } from "../../api";
+import { getCityData, getCountryData } from "../../api";
 
 const DetailedView = ({ allPollutants = [] }) => {
   const [selectedPollutant, setSelectedPollutant] = useState("");
@@ -40,9 +40,9 @@ const DetailedView = ({ allPollutants = [] }) => {
 
   const onSearchButtonClick = async () => {
     if (searchType === "city") {
-      await fetchData(getLatestCityData);
+      await fetchData(getCityData);
     } else if (searchType === "country") {
-      await fetchData(getLatestCountryData);
+      await fetchData(getCountryData);
     }
   }
 
