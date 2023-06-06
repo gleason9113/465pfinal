@@ -25,7 +25,19 @@ export const getCityData = async (city) => {
       throw new Error(`Failed to fetch data for ${city}: ${response.status}  ${response.statusText}`);
     }
     const data = await response.json();
-    return data;
+    let index = null;
+    if(data.results) {
+      for (let i = 0; i < data.results.length; i++) {
+        if(!index || data.results[i].measurements.length > index){
+          index = i;
+        }
+      }
+    }
+    if(index) {
+      return data.results[index];
+    } else {
+      return data;
+    }
   } catch (error) {
     console.log(`An error occurred: ${error}`);
     throw error;
