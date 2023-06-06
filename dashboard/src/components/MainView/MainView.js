@@ -15,7 +15,7 @@ const MainView = ({ allPollutants = [] }) => {
 
   const onSearchButtonClick = async () => {
     const result = await getCityData(searchedCity)
-      .then(response => response.results)
+      .then(response => response.results);
     setCityData(result[0]);
     console.log(cityData);
   }
