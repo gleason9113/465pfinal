@@ -1,77 +1,48 @@
-import React from "react";
-import {
-  VictoryLine,
-  VictoryChart,
-  VictoryAxis,
-  VictoryTheme,
-  VictoryLegend,
-} from "victory";
-import "./HistoricalChart.css";
+import React, { useState, useEffect } from "react";
+import { VictoryChart, VictoryAxis, VictoryLine, VictoryLegend, VictoryTheme } from "victory";
 
-const HistoricalChart = () => {
-  // Sample data
-  const pollutants = [
-    "humidity",
-    "pm1",
-    "pm10",
-    "pm25",
-    "pressure",
-    "temperature",
-    "um003",
-    "um005",
-    "um010",
-    "um025",
-    "um050",
-    "um100",
-  ];
+const HistoricalChart = ({ locationData }) => {
+  const [pollutants, setPollutants] = useState([]);
 
-  const colorArray = [
-    "tomato",
-    "orange",
-    "gold",
-    "cyan",
-    "navy",
-    "blue",
-    "purple",
-    "pink",
-    "red",
-    "green",
-    "brown",
-    "grey",
-  ];
+  // Update the pollutants state when locationData changes
+  useEffect(() => {
+    if (locationData) {
+      const uniquePollutants = [...new Set(locationData.map((item) => item.parameter))];
+      setPollutants(uniquePollutants);
+    }
+  }, [locationData]);
 
-  const generateData = () => {
-    return [...Array(10)].map((_, i) => {
-      return { x: i, y: Math.floor(Math.random() * 100) };
-    });
+  // Generate color array with as many colors as pollutants
+  const colorArray = ["#ff0000", "#00ff00", "#0000ff", "#ffff00", "#ff00ff", "#00ffff"]; // Add more colors if needed
+
+  // Generate data for each pollutant
+  const generateData = (pollutant) => {
+    return locationData
+      .filter((item) => item.parameter === pollutant)
+      .map((item, index) => ({ x: index + 1, y: item.value }));
   };
-
-  const legendData = pollutants.map((pollutant, index) => ({
-    name: pollutant,
-    symbol: { fill: colorArray[index] },
-  }));
 
   return (
     <div className="historical-chart">
       {pollutants.map((pollutant, index) => (
         <VictoryChart
+          key={pollutant}
           domainPadding={20}
           theme={VictoryTheme.material}
-          key={pollutant}
         >
           <VictoryAxis />
           <VictoryAxis dependentAxis />
           <VictoryLine
-            data={generateData()}
-            style={{ data: { stroke: colorArray[index] } }}
+            data={generateData(pollutant)}
+            style={{ data: { stroke: colorArray[index % colorArray.length] } }}
           />
           <VictoryLegend
             x={125}
             y={10}
             orientation="vertical"
             gutter={30}
-            style={{ title: {fontSize: 20 }, labels: { fontSize: 20 } }}
-            data={[{ name: pollutant, symbol: { fill: colorArray[index] } }]}
+            style={{ title: { fontSize: 20 }, labels: { fontSize: 20 } }}
+            data={[{ name: pollutant, symbol: { fill: colorArray[index % colorArray.length] } }]}
           />
         </VictoryChart>
       ))}
