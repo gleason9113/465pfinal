@@ -6,7 +6,7 @@ import MapChart from "../Map/Map";
 import PollutantList from "../Pollutants/PollutantList";
 import PollutantDetails from "../Pollutants/PollutantDetails";
 import TopCountries from "../TopCountries/TopCountries";
-import { getCityData } from "../../api";
+import { getAQIValue, getAllCities, getAllPollutants, getCityData, getCurrentData } from "../../api";
 
 const MainView = ({ allPollutants = [] }) => {
   const [selectedPollutant, setSelectedPollutant] = useState("");
@@ -14,6 +14,8 @@ const MainView = ({ allPollutants = [] }) => {
   const [cityData, setCityData] = useState("");
 
   const onSearchButtonClick = async () => {
+  //  const testData = await getAQIValue('Mexico');
+  //  console.log("testing:  ", testData);
     const result = await getCityData(searchedCity)
       .then(response => response.results);
     setCityData(result[0]);
