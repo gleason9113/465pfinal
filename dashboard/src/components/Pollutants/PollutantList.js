@@ -1,18 +1,23 @@
 import React, { useState } from "react";
 import "./PollutantList.css";
 
-const PollutantList = ({ pollutants = [], onPollutantSelect }) => {
+const pollutants = [
+  "Humidity",
+  "PM1",
+  "PM10",
+  "PM25",
+  "Pressure",
+  "Temperature C",
+  "Temperature F",
+  "CO (PPM)",
+  "CO2 (PPM)",
+  "CH4 (PPM)",
+  "NO2 (PPB)",
+  "Ozone (PPB)",
+];
+
+const PollutantList = ({ onPollutantSelect }) => {
   const [selectedPollutant, setSelectedPollutant] = useState();
-  /* const [allPollutants, setAllPollutants] = useState();
-
-  const fetchAllPollutants = () => {
-    getAllPollutants()
-      .then((response) => setAllPollutants(response.results));
-  }
-
-  useEffect(() => {
-    fetchAllPollutants();
-  }, []) */
 
   const handleChange = (e) => {
     setSelectedPollutant(e.target.value);
@@ -21,18 +26,11 @@ const PollutantList = ({ pollutants = [], onPollutantSelect }) => {
 
   return (
     <div className="pollutant-select-container">
-      <select value={selectedPollutant} onChange={e => handleChange(e)}>
+      <select className="pollutant-select" value={selectedPollutant} onChange={handleChange}>
         <option value="">Select a pollutant</option>
         {pollutants.map((pollutant, key) => (
-          <option
-            key={key}
-            value={pollutant.id}
-          >
-            {pollutant.displayName !== null
-              ?
-              `${pollutant.displayName}(${pollutant.preferredUnit.replace("_", " ")})`
-              :
-              `${pollutant.name.replace("_", " ")}(${pollutant.preferredUnit.replace("_", " ")})`}
+          <option className="pollutant-option" key={key} value={pollutant}>
+            {pollutant}
           </option>
         ))}
       </select>
