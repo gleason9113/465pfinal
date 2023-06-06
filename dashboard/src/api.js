@@ -116,6 +116,14 @@ export async function getAllPollutants() {
   return allPollutants.data;
 }
 
+
+//Bit of a mess, but I tested it briefly using 'Mexico' as the country and it works that far, at least
+//Helper function getCountryCode returns the 2char code for the country name passed in.
+//Then call the API with the country code and get the data for that country.
+//Then find the measurement for PM2.5 and get the value.
+//Then calculate the AQI value for that PM2.5 value. (Helper functions getBPLimits and getAQILimits are used for this.)
+//Then return the AQI value.
+
 export async function getAQIValue(country) {
   try {
     const countryCode = await getCountryCode(country);
@@ -131,12 +139,9 @@ export async function getAQIValue(country) {
       throw new Error('PM2.5 measurement not found for the specified country');
     }
     const pm25Value = pm25Measurement.value.toFixed(1);
-    console.log(Number.isNaN(pm25Value));
-    let BPLo, BPHi = getBPLimits(pm25Value);
-    let AQILo, AQIHi = getAQILimits(BPLo, BPHi);
+    let { BPLo, BPHi } = getBPLimits(pm25Value);
+    let { AQILo, AQIHi } = getAQILimits(BPLo, BPHi);
     let AQI = ((AQIHi - AQILo) / (BPHi - BPLo)) * (pm25Value - BPLo) + AQILo;
-    console.log(AQI);
-    console.log(Number.isNaN(AQI));
     return AQI;
    } catch (error) {
       console.log(`An error occurred: ${error}`);
@@ -183,74 +188,53 @@ export function getAQIColor(value) {
 
 function getBPLimits(value) {
   let BPLo, BPHi;
-  switch (value) {
-    case (value <= 12.1):
-      BPLo =  0;
-      BPHi = 12.1;
-      break;
-    case (value <= 35.4):
-      BPLo = 12.1;
-      BPHi = 35.4;
-      break;
-    case (value <= 55.4):
-      BPLo = 35.5;
-      BPHi = 55.4;
-      break;
-    default:
-      BPLo = 35.5;
-      BPHi = 55.4;
-      break;
+  if (value <= 12.1) {
+    BPLo =  0;
+    BPHi = 12.1;
+  } else if (value <= 35.4) {
+    BPLo = 12.1;
+    BPHi = 35.4;
+  } else if (value <= 55.4) {
+    BPLo = 35.5;
+    BPHi = 55.4; 
+  } else {
+    BPLo = 35.5;
+    BPHi = 55.4;
   }
   return { BPLo, BPHi }
 }
 
 function getAQILimits(BPLo, BPHi) {
   let AQILo, AQIHi;
-  switch (BPLo) {
-    case (BPLo <= 12.1): 
-      AQILo = 0;
-      break;
-    case (BPLo <= 35.4):
-      AQILo = 51;
-      break;
-    case (BPLo <= 55.4):   
-      AQILo = 101;
-      break;
-    case (BPLo <= 150.4): 
-      AQILo = 151;
-      break;
-    case (BPLo <= 250.4):
-      AQILo = 201;
-      break;
-    case (BPLo <= 350.4):
-      AQILo = 301; 
-      break;
-    default: 
-      AQILo = 301; 
-      break;
+  if (BPLo <= 12.1) {
+    AQILo = 0;
+  } else if (BPLo <= 35.4) {
+    AQILo = 51;
+  } else if (BPLo <= 55.4) {
+    AQILo = 101;
+  } else if (BPLo <= 150.4) {
+    AQILo = 151;
+  } else if (BPLo <= 250.4) {
+    AQILo = 201;
+  } else if (BPLo <= 350.4) {
+    AQILo = 301;
+  } else {
+    AQILo = 301;
   }
-  switch (BPHi) {
-    case (BPHi <= 12.1):
-      AQIHi = 50;
-      break;
-    case (BPHi <= 35.4):
-      AQIHi = 100;
-      break;
-    case (BPHi <= 55.4):
-      AQIHi = 150;
-      break;
-    case (BPHi <= 150.4):
-      AQIHi = 200;
-      break;
-    case (BPHi <= 250.4):
-      AQIHi = 300;
-      break;
-    case (BPHi <= 350.4):
-      AQIHi = 400;
-      break;
-    default:
-      AQIHi = 400;
-      break;
+  if (BPHi <= 12.1) {
+    AQIHi = 50;
+  } else if (BPHi <= 35.4) {
+    AQIHi = 100;
+  } else if (BPHi <= 55.4) {
+    AQIHi = 150;
+  } else if (BPHi <= 150.4) {
+    AQIHi = 200;
+  } else if (BPHi <= 250.4) {
+    AQIHi = 300;
+  } else if (BPHi <= 350.4) {
+    AQIHi = 400;
+  } else {
+    AQIHi = 400;
   }
   return { AQILo, AQIHi };
 }

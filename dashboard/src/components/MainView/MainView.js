@@ -15,8 +15,8 @@ const MainView = () => {
   const [cityData, setCityData] = useState("");
 
   const onSearchButtonClick = async () => {
-    const testData = await getAQIValue('Mexico');
-    console.log("testing:  ", testData);
+  //  const testData = await getAQIValue('Mexico');
+  //  console.log("testing:  ", testData);
     const result = await getCityData(searchedCity)
       .then(response => response.results)
     setCityData(result[0]);
