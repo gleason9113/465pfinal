@@ -23,7 +23,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/detailed" element={<DetailedView allPollutants={allPollutants} />} />
-        <Route path="/historical" element={<HistoricalView />} />
+        <Route path="/historical" element={<HistoricalView allPollutants={allPollutants} />} />
         <Route path="/" element={<MainView allPollutants={allPollutants} />} />
       </Routes>
     </Router>
