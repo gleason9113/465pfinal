@@ -11,13 +11,13 @@ import {
 import map from "./worldMap.json";
 import { getCountries } from "../../api";
 
-const MapChart = ({ parameter = "1" }) => {
+const MapChart = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await getCountries(parameter); // Use the API function
+        const response = await getCountries(); // Use the API function
         const mappedData = response.results.map((result) => ({
           ...result,
           measurements: result.measurements.reduce(
@@ -35,11 +35,7 @@ const MapChart = ({ parameter = "1" }) => {
     };
 
     fetchData();
-  }, [parameter]);
-
-  const colorScale = scaleLinear()
-    .domain([Math.min(...data.map(d => d.measurements[parameter])), Math.max(...data.map(d => d.measurements[parameter]))])
-    .range(["#000000", "#ffffff"]);
+  }, []);
 
   return (
     <div>
@@ -69,7 +65,7 @@ const MapChart = ({ parameter = "1" }) => {
                     <Geography
                       key={geo.rsmKey}
                       geography={geo}
-                      fill={d ? colorScale(d.measurements[parameter]) : "#F5F4F6"}
+                      fill="#F5F4F6"
                     />
                   );
                 })
