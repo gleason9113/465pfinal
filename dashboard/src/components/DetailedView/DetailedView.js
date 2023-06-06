@@ -9,57 +9,46 @@ import { getLatestCityData, getLatestCountryData } from "../../api";
 
 const DetailedView = ({ allPollutants = [] }) => {
   const [selectedPollutant, setSelectedPollutant] = useState("");
-  const [searchedValue, setSearchedValue] = useState("");
-  const [locationData, setLocationData] = useState("");
-  const [searchSelection, setSearchSelection] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
+  const [fetchedLocationData, setFetchedLocationData] = useState("");
+  const [searchType, setSearchType] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const searchOptions = [
+    { value: '', label: 'Select search parameter' },
+    { value: 'city', label: 'City' },
+    { value: 'country', label: 'Country' },
+  ];
+
+  const fetchData = async (getDataFn) => {
+    try {
+      const response = await getDataFn(searchValue);
+      const mappedData = response.results.map(({ measurements, ...rest }) => ({
+        ...rest,
+        measurements: measurements.reduce(
+          (acc, { parameter, value }) => ({ ...acc, [parameter]: value }),
+          {}
+        ),
+      }));
+      setFetchedLocationData(mappedData);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    } finally {
+      setLoading(true);
+    }
+  };
 
   const onSearchButtonClick = async () => {
-    setIsLoading(true);
-    if (searchSelection === "city") {
-      try {
-        const response = await getLatestCityData(searchedValue);
-        const mappedData = response.results.map((result) => ({
-          ...result,
-          measurements: result.measurements.reduce(
-            (acc, measurement) => ({
-              ...acc,
-              [measurement.parameter]: measurement.value,
-            }),
-            {}
-          ),
-        }));
-        setLocationData(mappedData);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    } else if (searchSelection === "country") {
-      try {
-        const response = await getLatestCountryData(searchedValue);
-        const mappedData = response.results.map((result) => ({
-          ...result,
-          measurements: result.measurements.reduce(
-            (acc, measurement) => ({
-              ...acc,
-              [measurement.parameter]: measurement.value,
-            }),
-            {}
-          ),
-        }));
-        setLocationData(mappedData);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setIsLoading(false);
-      }
+    if (searchType === "city") {
+      await fetchData(getLatestCityData);
+    } else if (searchType === "country") {
+      await fetchData(getLatestCountryData);
     }
   }
 
-  const handleChange = (e) => {
-    setSearchSelection(e.target.value);
-  }
+  const handleChange = (event) => {
+    setSearchType(event.target.value);
+  };
 
   return (
     <div className="detailed-view">
@@ -94,20 +83,22 @@ const DetailedView = ({ allPollutants = [] }) => {
               <PollutantDetails pollutant={selectedPollutant} />
             </div>
             <div className="search-box detail-serach-box">
-              <select value={searchSelection} onChange={e => handleChange(e)}>
-                <option value="">Select search parameter</option>
-                <option value={"city"}>City</option>
-                <option value={"country"}>Country</option>
+              <select value={searchType} onChange={handleChange}>
+                {searchOptions.map(option => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
               </select>
-              <input id="cityName" name="cityName" value={searchedValue} onChange={e => setSearchedValue(e.target.value)} type="text" placeholder="Search..." />
+              <input id="cityName" name="cityName" value={searchValue} onChange={e => setSearchValue(e.target.value)} type="text" placeholder="Search..." />
               <button className="search-btn" onClick={onSearchButtonClick}>Search</button>
             </div>
           </div>
         </div>
 
         <div className="detailed-chart-container">
-          {!isLoading &&
-            <DetailedChart locationData={locationData} />
+          {loading &&
+            <DetailedChart locationData={fetchedLocationData} />
           }
         </div>
       </div>
