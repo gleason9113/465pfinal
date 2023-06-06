@@ -41,7 +41,7 @@ export const getCountryData = async (country) => {
       throw new Error(`Failed to fetch data for ${country}: ${response.status}  ${response.statusText}`);
     }
     const data = await response.json();
-    const targetCountry = data.results.find((countryData) => countryData.country === countryCode);
+    const targetCountry = data.results.find((countryData) => countryData.country === countryCode); //Returns the 1st match in the response
     console.log(targetCountry);
     return targetCountry;
   } catch (error) {
@@ -93,7 +93,7 @@ export async function getAllPollutants() {
 
 export async function getCountryCode(country) {
   try {
-    const url = 'https://api.openaq.org/v2/countries?limit=200';
+    const url = 'https://api.openaq.org/v2/countries';
     const response = await fetch(url);
     if (!response.ok) {
       throw new Error(`Failed to fetch country data: ${response.status} ${response.statusText}`);
