@@ -15,7 +15,6 @@ const HistoricalView = ({ allPollutants = [] }) => {
   const handleFormSubmit = (data) => {
     setLocationData(data)
     setLoading(true);
-    console.log("Fetched location data:", locationData);
   };
 
   return (
@@ -55,8 +54,7 @@ const HistoricalView = ({ allPollutants = [] }) => {
         </div>
 
         <div className="historical-chart-container">
-          {loading &&
-            <HistoricalChart locationData={locationData} />}
+          <HistoricalChart locationData={locationData} />
         </div>
       </div>
     </div>

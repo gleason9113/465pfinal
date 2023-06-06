@@ -22,7 +22,6 @@ const HistoricalForm = ({ onSubmit, onReset }) => {
         parameter: result.parameter,
         value: result.value,
       }));
-      console.log(mappedData)
       setFetchedLocationData(mappedData);
     } catch (error) {
       console.error("Error fetching data:", error);
