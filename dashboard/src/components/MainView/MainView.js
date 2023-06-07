@@ -6,7 +6,7 @@ import MapChart from "../Map/Map";
 import PollutantList from "../Pollutants/PollutantList";
 import PollutantDetails from "../Pollutants/PollutantDetails";
 import TopCountries from "../TopCountries/TopCountries";
-import { getCityData, getCountryData } from "../../api";
+import { getCityData, getCountryData, getLocationData } from "../../api";
 
 
 const MainView = ({ allPollutants = [] }) => {
@@ -23,17 +23,9 @@ const MainView = ({ allPollutants = [] }) => {
   ];
 
   const onSearchButtonClick = async () => {
-    let response = null;
-    console.log(searchType);
-    if (searchType === 'city') {
-      response = await getCityData(searchValue);
-    } else if (searchType === 'country') {
-      response = await getCountryData(searchValue);
-    
-    }
-    console.log(response);
-    //getCityData will now return either an element of the results array (station w the highest # of recorded parameters)
-    //or the response as a whole if the results array is empty or missing - this needs to be adjusted as a result.
+    const data = await getLocationData(searchValue);
+    console.log(data);
+   
   }
 
   const setSearch = (event) => {

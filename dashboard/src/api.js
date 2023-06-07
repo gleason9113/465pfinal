@@ -169,6 +169,37 @@ export async function getCountryCode(country) {
   }
 }
 
+
+export async function getLocationData(location) {
+  try {
+    const { latitude, longitude } = await getCoords(location);
+    const radius = 5000;
+    const url = `https://api.openaq.org/v2/latest?limit=100&coordinates=${encodeURIComponent(latitude)},${encodeURIComponent(longitude)}&radius=${encodeURIComponent(radius)}`;
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch data for ${location}: ${response.status}  ${response.statusText}`);
+    }
+    const data = await response.json();
+    let index = null;
+    if(data.results) {
+      for (let i = 0; i < data.results.length; i++) {
+        if(!index || data.results[i].measurements.length > index){
+          index = i;
+        }
+      }
+    }
+    if(index) {
+      return data.results[index];
+    } else {
+      return data;
+    }
+  } catch (error) {
+    console.log(`An error occurred: ${error}`);
+    throw error;
+  }
+}
+  
+
 export async function getCoords(cityName) {
   try {
     console.log("getCoords called: ", cityName);
