@@ -5,7 +5,7 @@ import "./DetailedView.css";
 import PollutantDetails from "../Pollutants/PollutantDetails";
 import PollutantList from "../Pollutants/PollutantList";
 import DetailedChart from "../Charts/DetailedChart";
-import { getLatestCityData, getLatestCountryData } from "../../api";
+import { getCityData, getCountryData } from "../../api";
 import { NewDetailedChart } from "../Charts/NewDetailedChart";
 
 const DetailedView = () => {
