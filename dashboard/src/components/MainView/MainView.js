@@ -14,10 +14,11 @@ const MainView = ({ allPollutants = [] }) => {
   const [cityData, setCityData] = useState("");
 
   const onSearchButtonClick = async () => {
-    const result = await getCityData(searchedCity)
-      .then(response => response.results);
+    const result = await getCityData(searchedCity).then(
+      (response) => response.results
+    );
     setCityData(result[0]);
-  }
+  };
 
   return (
     <div className="main-view">
@@ -40,24 +41,31 @@ const MainView = ({ allPollutants = [] }) => {
       <div className="main-container">
         <div className="list-and-detail-container">
           <div className="pollutant-select-container">
-            <PollutantList
-              pollutants={allPollutants}
-              onPollutantSelect={id => {
-                const currPollutant = allPollutants.filter(pollutant => Number(pollutant.id) === Number(id));
-                setSelectedPollutant(currPollutant[0]);
-              }}
-            />
+            <PollutantList onPollutantSelect={setSelectedPollutant} />
             <div className="pollutant-details-container">
-              <PollutantDetails pollutant={selectedPollutant} />
-              <TopCountries />
+              <PollutantDetails selectedPollutant={selectedPollutant} />
+              <TopCountries selectedPollutant={selectedPollutant} />
             </div>
           </div>
         </div>
 
         <div className="main-map-container">
           <div className="search-box">
-            <input id="cityName" name="cityName" value={searchedCity} onChange={e => setSearchedCity(e.target.value)} type="text" placeholder="Search city..." />
-            <button className="search-btn" onClick={onSearchButtonClick}>Search</button>
+            <input
+              id="cityName"
+              name="cityName"
+              value={searchedCity}
+              onChange={(e) => setSearchedCity(e.target.value)}
+              type="text"
+              placeholder="Search city..."
+            />
+            <button
+              className="search-btn"
+              type="button"
+              onClick={onSearchButtonClick}
+            >
+              Search
+            </button>
           </div>
           <MapChart />
         </div>

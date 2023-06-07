@@ -6,16 +6,27 @@
   background-color: #fff;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   margin: 10px auto;
+  color: #777;
+  font-size: 1.2rem;
 }
 
-.pollutant-details h2 {
+.pollutant-title {
   margin-top: 0;
-  margin-bottom: 1rem;
   color: #333;
   font-size: 1.5rem;
 }
 
-.pollutant-details p {
+.pollutant-description {
+  font-size: 1.2rem;
+  color: #777;
+}
+
+.learn-more-link {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.pollutant-instruction {
   color: #777;
   font-size: 1.2rem;
 }
