@@ -3,10 +3,14 @@
   width: 100%;
 }
 
-.pollutant-select-container select {
+.pollutant-select {
   padding: 0.5rem;
   font-size: 1.2rem;
   border-radius: 5px;
   border: 1px solid #625c5c;
   width: 100%;
+}
+
+.pollutant-option {
+  font-size: 1rem;
 }

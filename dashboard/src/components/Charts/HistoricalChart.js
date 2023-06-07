@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { VictoryChart, VictoryAxis, VictoryLine, VictoryLegend, VictoryTheme } from "victory";
 
 const HistoricalChart = ({ locationData }) => {
+  console.log(locationData);
   const [pollutants, setPollutants] = useState([]);
 
   // Update the pollutants state when locationData changes
@@ -23,7 +24,7 @@ const HistoricalChart = ({ locationData }) => {
   };
 
   return (
-    <div className="historical-chart">
+    <>
       {pollutants.map((pollutant, index) => (
         <VictoryChart
           key={pollutant}
@@ -46,7 +47,7 @@ const HistoricalChart = ({ locationData }) => {
           />
         </VictoryChart>
       ))}
-    </div>
+    </>
   );
 };
 

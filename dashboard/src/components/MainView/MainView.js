@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import "./MainView.css";
 import MapChart from "../Map/Map";
@@ -8,12 +8,22 @@ import PollutantDetails from "../Pollutants/PollutantDetails";
 import TopCountries from "../TopCountries/TopCountries";
 import { getCityData, getCountryData } from "../../api";
 
+
 const MainView = ({ allPollutants = [] }) => {
+  const navigate = useNavigate();
   const [selectedPollutant, setSelectedPollutant] = useState("");
-  const [searchedCity, setSearchedCity] = useState("");
-  const [cityData, setCityData] = useState("");
+  const [searchValue, setSearchValue] = useState("");
+  const [searchType, setSearchType] = useState("");
+
+
+  const searchOptions = [
+    { value: '', label: 'Select search parameter' },
+    { value: 'city', label: 'City' },
+    { value: 'country', label: 'Country' },
+  ];
 
   const onSearchButtonClick = async () => {
+
     const countryResponse = await getCountryData("Mexico");
     console.log(countryResponse);
     const cityResponse = await getCityData("London");
@@ -24,6 +34,7 @@ const MainView = ({ allPollutants = [] }) => {
     //or the response as a whole if the results array is empty or missing - this needs to be adjusted as a result.
   }
 
+
   return (
     <div className="main-view">
       <nav className="navbar">
@@ -31,9 +42,6 @@ const MainView = ({ allPollutants = [] }) => {
         <ul className="nav-list">
           <li className="nav-item">
             <Link to="/">Main</Link>
-          </li>
-          <li className="nav-item">
-            <Link to="/detailed">Detailed</Link>
           </li>
           <li className="nav-item">
             <Link to="/historical">Historical</Link>
@@ -45,23 +53,25 @@ const MainView = ({ allPollutants = [] }) => {
       <div className="main-container">
         <div className="list-and-detail-container">
           <div className="pollutant-select-container">
-            <PollutantList
-              pollutants={allPollutants}
-              onPollutantSelect={id => {
-                const currPollutant = allPollutants.filter(pollutant => Number(pollutant.id) === Number(id));
-                setSelectedPollutant(currPollutant[0]);
-              }}
-            />
+            <PollutantList onPollutantSelect={setSelectedPollutant} />
             <div className="pollutant-details-container">
-              <PollutantDetails pollutant={selectedPollutant} />
-              <TopCountries />
+              <PollutantDetails selectedPollutant={selectedPollutant} />
+              <TopCountries selectedPollutant={selectedPollutant} />
             </div>
           </div>
         </div>
 
         <div className="main-map-container">
-          <div className="search-box">
-            <input id="cityName" name="cityName" value={searchedCity} onChange={e => setSearchedCity(e.target.value)} type="text" placeholder="Search city..." />
+
+          <div className="search-box detail-search-box">
+            <select value={searchType} onChange={handleChange}>
+              {searchOptions.map(option => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+            <input id="cityName" name="cityName" value={searchValue} onChange={e => setSearchValue(e.target.value)} type="text" placeholder="Search..." />
             <button className="search-btn" onClick={onSearchButtonClick}>Search</button>
           </div>
           <MapChart />

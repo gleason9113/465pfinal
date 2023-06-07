@@ -1,21 +1,50 @@
 .top-countries {
   border-top: 1px solid #000;
   padding-top: 20px;
+  background: #f8f9fa;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
 }
 
-.top-countries h2 {
+.country-heading {
   font-size: 1.5rem;
   color: #333;
   margin-bottom: 1rem;
+  text-align: center;
+  text-transform: uppercase;
 }
 
-.top-countries ul {
+.country-list {
   list-style: none;
   padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.top-countries li {
+.country-item {
   font-size: 1.2rem;
   color: #333;
   margin-bottom: 0.5rem;
+  width: 100%;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+  padding: 10px 0;
+}
+
+.country-item:last-child {
+  border-bottom: none;
+}
+
+.country-flag {
+  margin-right: 10px;
+}
+
+.country-name {
+  font-weight: 600;
+}
+
+.country-aqi {
+  color: #54a2f6;
+  font-weight: 700;
 }
