@@ -22,17 +22,16 @@ const HistoricalForm = ({ onSubmit, onReset }) => {
         parameter: result.parameter,
         value: result.value,
       }));
-      setFetchedLocationData(mappedData);
+      return mappedData;
     } catch (error) {
       console.error("Error fetching data:", error);
-    } finally {
     }
   };
 
   const handleSubmit = async () => {
     if (searchType) {
-      await fetchData(getDateRange);
-      onSubmit(fetchedLocationData);
+      const data = await fetchData(getDateRange);
+      onSubmit(data);
     }
   };
 
