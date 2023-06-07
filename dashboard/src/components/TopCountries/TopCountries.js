@@ -36,16 +36,16 @@ const TopCountries = ({ selectedPollutant }) => {
       try {
         const data = [];
         for (let country of countries) {
-          console.log("Country: ", country);
+        //  console.log("Country: ", country);
           let aqi = await getAQIValue(country);  
-          console.log("AQI: ", aqi);
+        //  console.log("AQI: ", aqi);
           let result =  { name: country, flag: "🇫🇮", aqi: aqi };
           data.push(result);
-          console.log("Data: ", data);  
+        //  console.log("Data: ", data);  
         }
 
         data.push(test);
-        console.log("Test: ", test);
+       // console.log("Test: ", test);
         setAqiValues(data);  
     } catch (error) {
       console.error("Error fetching data:", error);

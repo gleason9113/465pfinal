@@ -21,8 +21,10 @@ export const getCountries = async () => {
 export const getCityData = async (city) => {
   try {
     console.log("getCityData called!");
-    const { lat, long } = await getCoords(city);
-    console.log(lat, long);
+    const { latitude, longitude } = await getCoords(city);
+    if(latitude && longitude) {
+      console.log("Back!", latitude, longitude);
+    }
     const url = `https://api.openaq.org/v2/latest?limit=500&city=${encodeURIComponent(city)}`;
     const response = await fetch(url);
     if (!response.ok) {
@@ -167,11 +169,15 @@ export async function getCountryCode(country) {
 
 export async function getCoords(cityName) {
   try {
-    const url = `https://api.positionstack.com/v1/forward?access_key=${AN_API_KEY}&query=${encodeURIComponent(cityName)}`;
+    console.log("getCoords called: ", cityName);
+    const url = `http://api.positionstack.com/v1/forward?access_key=${AN_API_KEY}&query=${encodeURIComponent(cityName)}`;
     const response = await fetch(url);
+    console.log(response);
     if (response.ok) {
       const data = await response.json();
+      console.log(data);
       if (data.data.length > 0) {
+        console.log("Coords: ", data.data[0].latitude, data.data[0].longitude); 
         const { latitude, longitude } = data.data[0];
         return { latitude, longitude };
       } else {
