@@ -20,10 +20,14 @@ const MainView = ({ allPollutants = [] }) => {
     { value: "country", label: "Country" },
   ];
 
+  const handleChange = (event) => {
+    setSearchType(event.target.value);
+  };
+
   const onSearchButtonClick = async () => {
     navigate("/detailed", {
       state: {
-        allPollutants,
+        // allPollutants,
         searchedValue: searchValue,
         searchedType: searchType,
       },
@@ -66,15 +70,9 @@ const MainView = ({ allPollutants = [] }) => {
         </div>
 
         <div className="main-map-container">
-          <div className="search-box detail-search-box">
-            {/* <select value={searchType} onChange={handleChange}>
-              {searchOptions.map(option => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </select> */}
+          <div className="search-box">
             <input
+              className="search-input"
               id="cityName"
               name="cityName"
               value={searchValue}
@@ -82,7 +80,22 @@ const MainView = ({ allPollutants = [] }) => {
               type="text"
               placeholder="Search..."
             />
-            <button className="search-btn" onClick={onSearchButtonClick}>
+            <select
+              className="search-select"
+              value={searchType}
+              onChange={handleChange}
+            >
+              {searchOptions.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+            <button
+              className="search-btn"
+              onClick={onSearchButtonClick}
+              disabled={!searchType}
+            >
               Search
             </button>
           </div>

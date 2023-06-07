@@ -61,14 +61,21 @@
   top: 10px;
   left: 50%;
   transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.search-box input {
-  width: 300px;
+.search-box .search-input .search-select {
   padding: 10px;
   font-size: 1rem;
   border-radius: 4px;
   border: 1px solid #625c5c;
+  margin-right: 20px;
+}
+
+.search-input .search-select {
+  height: 100%;
 }
 
 .search-box .search-btn {
@@ -81,6 +88,7 @@
   background-color: white;
   color: #625c5c;
   cursor: pointer;
+  height: 40px;
 }
 
 .search-box .search-btn:hover {
