@@ -1,15 +1,17 @@
 .top-countries {
-  border-top: 1px solid #000;
+  border: 1px solid #000;
   padding-top: 20px;
-  background: #f8f9fa;
+  background-color: #fff;
   border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-.country-heading {
-  font-size: 1.5rem;
+.country-header {
+  font-size: 22px;
   color: #333;
   margin-bottom: 1rem;
+  margin-left: 5px;
+  margin-right: 5px;
   text-align: center;
   text-transform: uppercase;
 }

@@ -6,6 +6,7 @@ import PollutantDetails from "../Pollutants/PollutantDetails";
 import PollutantList from "../Pollutants/PollutantList";
 import DetailedChart from "../Charts/DetailedChart";
 import { getLatestCityData, getLatestCountryData } from "../../api";
+import { NewDetailedChart } from "../Charts/NewDetailedChart";
 
 const DetailedView = () => {
   const location = useLocation();
@@ -72,64 +73,72 @@ const DetailedView = () => {
   }, [searchValue, searchType]);
 
   return (
-    <div className="detailed-view">
-      <nav className="navbar">
-        <div className="header">Air Quality Dashboard</div>
-        <ul className="nav-list">
-          <li className="nav-item">
-            <Link to="/">Main</Link>
-          </li>
-          <li className="nav-item">
-            <Link to="/historical">Historical</Link>
-          </li>
-        </ul>
-        <span></span>
+    <>
+      <nav className="mv-navbar">
+        <div className="mv-header">Air Quality Dashboard</div>
+        <div className="mv-nav-list-container">
+          <ul className="mv-nav-list">
+            <li className="mv-nav-list-item">
+              <Link className="mv-nav-link" to="/">
+                Main
+              </Link>
+            </li>
+            <li className="mv-nav-list-item">
+              <Link className="mv-nav-link" to="/detailed">
+                Detailed
+              </Link>
+            </li>
+            <li className="mv-nav-list-item">
+              <Link className="mv-nav-link" to="/historical">
+                Historical
+              </Link>
+            </li>
+          </ul>
+        </div>
       </nav>
 
-      <div className="detailed-container">
-        <div className="list-and-detail-container">
-          <div className="pollutant-select-container">
-            <PollutantList onPollutantSelect={setSelectedPollutant} />
-            <PollutantDetails selectedPollutant={selectedPollutant} />
-            <div className="search-box detail-serach-box">
-              <div>
-                <input
-                  className="detailed-search-input"
-                  id="cityName"
-                  name="cityName"
-                  value={searchValue}
-                  onChange={(e) => setSearchValue(e.target.value)}
-                  type="text"
-                  placeholder="Search..."
-                />
-                <select
-                  className="detailed-search-select"
-                  value={searchType}
-                  onChange={handleChange}
-                >
-                  {searchOptions.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </select>
+      <div className="main-view">
+        <div className="main-container deatiled-container">
+          {/* <div className="search-box">
+            <input
+              className="search-input"
+              id="cityName"
+              name="cityName"
+              value={searchValue}
+              onChange={(e) => setSearchValue(e.target.value)}
+              type="text"
+              placeholder="Search..."
+            />
+            <select
+              className="search-select"
+              value={searchType}
+              onChange={handleChange}
+            >
+              {searchOptions.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+            <button className="search-btn" onClick={onSearchButtonClick}>
+              Search
+            </button>
+          </div> */}
+          <div className="pollutant-and-map-container">
+            <div className="list-and-detail-container">
+              <div className="pollutant-select-container">
+                <PollutantList onPollutantSelect={setSelectedPollutant} />
+                <PollutantDetails selectedPollutant={selectedPollutant} />
               </div>
-
-              <button
-                className="search-btn detail-search-btn"
-                onClick={onSearchButtonClick}
-              >
-                Search
-              </button>
+            </div>
+            <div className="main-map-container">
+              {/* {loading && <DetailedChart locationData={fetchedLocationData} />} */}
+              <NewDetailedChart />
             </div>
           </div>
         </div>
-
-        <div className="detailed-chart-container">
-          {loading && <DetailedChart locationData={fetchedLocationData} />}
-        </div>
       </div>
-    </div>
+    </>
   );
 };
 

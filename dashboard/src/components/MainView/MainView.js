@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import "./MainView.css";
-import MapChart from "../Map/Map";
 import PollutantList from "../Pollutants/PollutantList";
 import PollutantDetails from "../Pollutants/PollutantDetails";
 import TopCountries from "../TopCountries/TopCountries";
 import { getCityData, getCountryData } from "../../api";
+import { WorldMap } from "../Map/WorldMap";
 
 const MainView = () => {
   const navigate = useNavigate();
@@ -31,47 +31,34 @@ const MainView = () => {
         searchedType: searchType,
       },
     });
-
-    // const countryResponse = await getCountryData("Mexico");
-    // console.log(countryResponse);
-    // const cityResponse = await getCityData("London");
-    // console.log(cityResponse);
-    // const result = await getCityData(searchedCity)
-    //   .then(response => response.results);
-    // setCityData(result[0]); //getCityData will now return either an element of the results array (station w the highest # of recorded parameters)
-    // //or the response as a whole if the results array is empty or missing - this needs to be adjusted as a result.
   };
 
   return (
-    <div className="main-view">
-      <nav className="navbar">
-        <div className="header">Air Quality Dashboard</div>
-        <ul className="nav-list">
-          <li className="nav-item">
-            <Link to="/">Main</Link>
-          </li>
-          <li className="nav-item">
-            <Link to="/detailed">Detailed</Link>
-          </li>
-          <li className="nav-item">
-            <Link to="/historical">Historical</Link>
-          </li>
-        </ul>
-        <span></span>
-      </nav>
-
-      <div className="main-container">
-        <div className="list-and-detail-container">
-          <div className="pollutant-select-container">
-            <PollutantList onPollutantSelect={setSelectedPollutant} />
-            <div className="pollutant-details-container">
-              <PollutantDetails selectedPollutant={selectedPollutant} />
-              <TopCountries selectedPollutant={selectedPollutant} />
-            </div>
-          </div>
+    <>
+      <nav className="mv-navbar">
+        <div className="mv-header">Air Quality Dashboard</div>
+        <div className="mv-nav-list-container">
+          <ul className="mv-nav-list">
+            <li className="mv-nav-list-item">
+              <Link className="mv-nav-link" to="/">
+                Main
+              </Link>
+            </li>
+            <li className="mv-nav-list-item">
+              <Link className="mv-nav-link" to="/detailed">
+                Detailed
+              </Link>
+            </li>
+            <li className="mv-nav-list-item">
+              <Link className="mv-nav-link" to="/historical">
+                Historical
+              </Link>
+            </li>
+          </ul>
         </div>
-
-        <div className="main-map-container">
+      </nav>
+      <div className="main-view">
+        <div className="main-container">
           <div className="search-box">
             <input
               className="search-input"
@@ -101,10 +88,24 @@ const MainView = () => {
               Search
             </button>
           </div>
-          <MapChart />
+          <div className="pollutant-and-map-container">
+            <div className="list-and-detail-container">
+              <div className="pollutant-select-container">
+                <PollutantList onPollutantSelect={setSelectedPollutant} />
+                <div className="pollutant-details-container">
+                  <PollutantDetails selectedPollutant={selectedPollutant} />
+
+                  <TopCountries selectedPollutant={selectedPollutant} />
+                </div>
+              </div>
+            </div>
+            <div className="main-map-container">
+              <WorldMap />
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

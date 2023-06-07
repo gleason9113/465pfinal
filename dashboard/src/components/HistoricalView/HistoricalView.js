@@ -6,6 +6,7 @@ import HistoricalForm from "../Forms/HistoricalForm";
 import HistoricalChart from "../Charts/HistoricalChart";
 import PollutantDetails from "../Pollutants/PollutantDetails";
 import PollutantList from "../Pollutants/PollutantList";
+import { NewHistoricalChart } from "../Charts/NewHistoricalChart";
 
 const HistoricalView = ({ allPollutants = [] }) => {
   const [selectedPollutant, setSelectedPollutant] = useState("");
@@ -18,37 +19,48 @@ const HistoricalView = ({ allPollutants = [] }) => {
   };
 
   return (
-    <div className="historical-view">
-      <nav className="navbar">
-        <div className="header">Air Quality Dashboard</div>
-        <ul className="nav-list">
-          <li className="nav-item">
-            <Link to="/">Main</Link>
-          </li>
-          <li className="nav-item">
-            <Link to="/detailed">Detailed</Link>
-          </li>
-          <li className="nav-item">
-            <Link to="/historical">Historical</Link>
-          </li>
-        </ul>
-        <span></span>
+    <>
+      <nav className="mv-navbar">
+        <div className="mv-header">Air Quality Dashboard</div>
+        <div className="mv-nav-list-container">
+          <ul className="mv-nav-list">
+            <li className="mv-nav-list-item">
+              <Link className="mv-nav-link" to="/">
+                Main
+              </Link>
+            </li>
+            <li className="mv-nav-list-item">
+              <Link className="mv-nav-link" to="/detailed">
+                Detailed
+              </Link>
+            </li>
+            <li className="mv-nav-list-item">
+              <Link className="mv-nav-link" to="/historical">
+                Historical
+              </Link>
+            </li>
+          </ul>
+        </div>
       </nav>
 
-      <div className="historical-container">
-        <div className="list-and-detail-container">
-          <div className="pollutant-select-container">
-            <PollutantList onPollutantSelect={setSelectedPollutant} />
-            <PollutantDetails selectedPollutant={selectedPollutant} />
-            <HistoricalForm onSubmit={handleFormSubmit} />
+      <div className="main-view">
+        <div className="main-container">
+          <div className="pollutant-and-map-container">
+            <div className="list-and-detail-container">
+              <div className="pollutant-select-container">
+                <PollutantList onPollutantSelect={setSelectedPollutant} />
+                <PollutantDetails selectedPollutant={selectedPollutant} />
+                <HistoricalForm onSubmit={handleFormSubmit} />
+              </div>
+            </div>
+            <div className="main-map-container">
+              {/* <HistoricalChart locationData={locationData} /> */}
+              <NewHistoricalChart />
+            </div>
           </div>
         </div>
-
-        <div className="historical-chart-container">
-          <HistoricalChart locationData={locationData} />
-        </div>
       </div>
-    </div>
+    </>
   );
 };
 

@@ -41,7 +41,7 @@ const TopCountries = ({ selectedPollutant }) => {
   }, [selectedPollutant]);
   return (
     <div className="top-countries">
-      <h2 className="country-heading">
+      <h2 className="country-header">
         Top 5 Countries with Best Air Quality
       </h2>
       <ul className="country-list">
