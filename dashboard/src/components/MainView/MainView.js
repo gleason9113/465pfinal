@@ -23,17 +23,22 @@ const MainView = ({ allPollutants = [] }) => {
   ];
 
   const onSearchButtonClick = async () => {
-
-    const countryResponse = await getCountryData("Mexico");
-    console.log(countryResponse);
-    const cityResponse = await getCityData("London");
-    console.log(cityResponse);
-    const result = await getCityData(searchedCity)
-      .then(response => response.results);
-    setCityData(result[0]); //getCityData will now return either an element of the results array (station w the highest # of recorded parameters)
+    let response = null;
+    console.log(searchType);
+    if (searchType === 'city') {
+      response = await getCityData(searchValue);
+    } else if (searchType === 'country') {
+      response = await getCountryData(searchValue);
+    
+    }
+    console.log(response);
+    //getCityData will now return either an element of the results array (station w the highest # of recorded parameters)
     //or the response as a whole if the results array is empty or missing - this needs to be adjusted as a result.
   }
 
+  const setSearch = (event) => {
+    setSearchType(event.target.value);
+  };
 
   return (
     <div className="main-view">
@@ -64,7 +69,7 @@ const MainView = ({ allPollutants = [] }) => {
         <div className="main-map-container">
 
           <div className="search-box detail-search-box">
-            <select value={searchType} onChange={handleChange}>
+            <select value={searchType} onChange={setSearch}>
               {searchOptions.map(option => (
                 <option key={option.value} value={option.value}>
                   {option.label}
