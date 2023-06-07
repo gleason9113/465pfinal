@@ -25,7 +25,8 @@ export const getCityData = async (city) => {
     if(latitude && longitude) {
       console.log("Back!", latitude, longitude);
     }
-    const url = `https://api.openaq.org/v2/latest?limit=500&city=${encodeURIComponent(city)}`;
+    const radius = 500;
+    const url = `https://api.openaq.org/v2/latest?limit=500&coordinates=${encodeURIComponent(latitude)},${encodeURIComponent(longitude)},${encodeURIComponent(radius)}`;
     const response = await fetch(url);
     if (!response.ok) {
       throw new Error(`Failed to fetch data for ${city}: ${response.status}  ${response.statusText}`);
