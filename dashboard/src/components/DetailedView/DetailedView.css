@@ -68,19 +68,35 @@
   position: relative;
   margin-right: 0;
   padding: 0;
-  margin: 0;
+  margin-left: 10px;
+}
+
+.detailed-search-input {
+  padding: 1px;
+  width: 100%;
 }
 
 .detail-search-btn {
   width: 100%;
   box-sizing: border-box;
+  padding: 20px;
+}
+
+.detailed-search-select {
+  padding: 1px;
+  font-size: 1rem;
+  border-radius: 4px;
+  border: 1px solid #625c5c;
+  margin-right: 20px;
+  width: 100%;
 }
 
 .detail-serach-box .detail-search-btn {
   width: 100%;
   display: block;
   box-sizing: border-box;
-  margin-left: 0;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .detailed-container {

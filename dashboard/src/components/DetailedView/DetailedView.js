@@ -7,7 +7,7 @@ import PollutantList from "../Pollutants/PollutantList";
 import DetailedChart from "../Charts/DetailedChart";
 import { getLatestCityData, getLatestCountryData } from "../../api";
 
-const DetailedView = ({ allPollutants = [] }) => {
+const DetailedView = () => {
   const location = useLocation();
   const [pollutants, setPollutants] = useState([]);
   const [selectedPollutant, setSelectedPollutant] = useState("");
@@ -17,9 +17,9 @@ const DetailedView = ({ allPollutants = [] }) => {
   const [loading, setLoading] = useState(false);
 
   const searchOptions = [
-    { value: '', label: 'Select search parameter' },
-    { value: 'city', label: 'City' },
-    { value: 'country', label: 'Country' },
+    { value: "", label: "Select search parameter" },
+    { value: "city", label: "City" },
+    { value: "country", label: "Country" },
   ];
 
   const fetchData = async (getDataFn) => {
@@ -42,7 +42,7 @@ const DetailedView = ({ allPollutants = [] }) => {
 
   const onSearchButtonClick = async () => {
     incomingState();
-  }
+  };
 
   const handleChange = (event) => {
     setSearchType(event.target.value);
@@ -54,13 +54,15 @@ const DetailedView = ({ allPollutants = [] }) => {
     } else if (searchType === "country") {
       await fetchData(getLatestCountryData);
     }
-  }
+  };
 
   useEffect(() => {
-    setPollutants(location.state.allPollutants);
-    setSearchValue(location.state.searchedValue);
-    setSearchType(location.state.searchedType);
-    incomingState();
+    if (location.state) {
+      setPollutants(location.state.allPollutants);
+      setSearchValue(location.state.searchedValue);
+      setSearchType(location.state.searchedType);
+      incomingState();
+    }
   }, []);
 
   useEffect(() => {
@@ -87,35 +89,44 @@ const DetailedView = ({ allPollutants = [] }) => {
       <div className="detailed-container">
         <div className="list-and-detail-container">
           <div className="pollutant-select-container">
-            <PollutantList
-              pollutants={pollutants}
-              onPollutantSelect={id => {
-                const currPollutant = pollutants.filter(pollutant => Number(pollutant.id) === Number(id));
-                setSelectedPollutant(currPollutant[0]);
-              }}
-            />
-
-            <div className="pollutant-details-container">
-              <PollutantDetails pollutant={selectedPollutant} />
-            </div>
+            <PollutantList onPollutantSelect={setSelectedPollutant} />
+            <PollutantDetails selectedPollutant={selectedPollutant} />
             <div className="search-box detail-serach-box">
-              <select value={searchType} onChange={handleChange}>
-                {searchOptions.map(option => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
-              </select>
-              <input id="cityName" name="cityName" value={searchValue} onChange={e => setSearchValue(e.target.value)} type="text" placeholder="Search..." />
-              <button className="search-btn" onClick={onSearchButtonClick}>Search</button>
+              <div>
+                <input
+                  className="detailed-search-input"
+                  id="cityName"
+                  name="cityName"
+                  value={searchValue}
+                  onChange={(e) => setSearchValue(e.target.value)}
+                  type="text"
+                  placeholder="Search..."
+                />
+                <select
+                  className="detailed-search-select"
+                  value={searchType}
+                  onChange={handleChange}
+                >
+                  {searchOptions.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <button
+                className="search-btn detail-search-btn"
+                onClick={onSearchButtonClick}
+              >
+                Search
+              </button>
             </div>
           </div>
         </div>
 
         <div className="detailed-chart-container">
-          {loading &&
-            <DetailedChart locationData={fetchedLocationData} />
-          }
+          {loading && <DetailedChart locationData={fetchedLocationData} />}
         </div>
       </div>
     </div>

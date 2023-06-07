@@ -13,7 +13,7 @@ const HistoricalView = ({ allPollutants = [] }) => {
   const [loading, setLoading] = useState(false);
 
   const handleFormSubmit = (data) => {
-    setLocationData(data)
+    setLocationData(data);
     setLoading(true);
   };
 
@@ -38,17 +38,8 @@ const HistoricalView = ({ allPollutants = [] }) => {
       <div className="historical-container">
         <div className="list-and-detail-container">
           <div className="pollutant-select-container">
-            <PollutantList
-              pollutants={allPollutants}
-              onPollutantSelect={id => {
-                const currPollutant = allPollutants.filter(pollutant => Number(pollutant.id) === Number(id));
-                setSelectedPollutant(currPollutant[0]);
-              }}
-            />
-
-            <div className="pollutant-details-container">
-              <PollutantDetails pollutant={selectedPollutant} />
-            </div>
+            <PollutantList onPollutantSelect={setSelectedPollutant} />
+            <PollutantDetails selectedPollutant={selectedPollutant} />
             <HistoricalForm onSubmit={handleFormSubmit} />
           </div>
         </div>

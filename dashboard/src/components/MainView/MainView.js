@@ -8,7 +8,7 @@ import PollutantDetails from "../Pollutants/PollutantDetails";
 import TopCountries from "../TopCountries/TopCountries";
 import { getCityData, getCountryData } from "../../api";
 
-const MainView = ({ allPollutants = [] }) => {
+const MainView = () => {
   const navigate = useNavigate();
   const [selectedPollutant, setSelectedPollutant] = useState("");
   const [searchValue, setSearchValue] = useState("");
@@ -27,7 +27,6 @@ const MainView = ({ allPollutants = [] }) => {
   const onSearchButtonClick = async () => {
     navigate("/detailed", {
       state: {
-        // allPollutants,
         searchedValue: searchValue,
         searchedType: searchType,
       },
@@ -50,6 +49,9 @@ const MainView = ({ allPollutants = [] }) => {
         <ul className="nav-list">
           <li className="nav-item">
             <Link to="/">Main</Link>
+          </li>
+          <li className="nav-item">
+            <Link to="/detailed">Detailed</Link>
           </li>
           <li className="nav-item">
             <Link to="/historical">Historical</Link>
