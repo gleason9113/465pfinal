@@ -51,9 +51,9 @@ const DetailedView = () => {
 
   const incomingState = async () => {
     if (searchType === "city") {
-      await fetchData(getLatestCityData);
+      await fetchData(getCityData);
     } else if (searchType === "country") {
-      await fetchData(getLatestCountryData);
+      await fetchData(getCountryData);
     }
   };
 

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { AN_API_KEY } from "./config";
 
 const apiURL = "https://api.openaq.org/v2";
 
@@ -19,10 +20,10 @@ export const getCountries = async () => {
 };
 
 export const getCityData = async (city) => {
-  try {
+  try 
     const url = `https://api.openaq.org/v2/cities?city=${encodeURIComponent(
       city
-    )}`;
+    )}`
     const response = await fetch(url);
     if (!response.ok) {
       throw new Error(
@@ -84,30 +85,7 @@ export const getLatestCountryData = async (country) => {
   } catch (error) {
     console.log(`An error occurred: ${error}`);
     throw error;
-  }
-};
 
-
-export const getCountryData = async (country) => {
-  // try {
-  //   const url = "https://api.openaq.org/v2/countries?limit=200";
-  //   const response = await fetch(url);
-  //   if (!response.ok) {
-  //     throw new Error(
-  //       `Failed to fetch data for ${country}: ${response.status}  ${response.statusText}`
-  //     );
-  //   }
-  //   const data = await response.json();
-
-  //   const targetCountry = data.results.find(
-  //     (countryData) => countryData.country === countryCode
-  //   ); //Returns the 1st match in the response
-  //   console.log(targetCountry);
-  //   return targetCountry;
-  // } catch (error) {
-  //   console.log(`An error occurred: ${error}`);
-  //   throw error;
-  // }
 };
 
 export const getCurrentData = async () => {
@@ -193,18 +171,18 @@ export async function getAllPollutants() {
 //Then return the AQI value.
 
 export async function getCountryCode(country) {
-  try {
-    const url = "https://api.openaq.org/v2/countries";
+  try
+    const url = "https://api.openaq.org/v2/countries
     const response = await fetch(url);
     if (!response.ok) {
       throw new Error(
         `Failed to fetch country data: ${response.status} ${response.statusText}`
       );
     }
-    const data = await response.json();
+    const data = await response.json()
     const target = data.results.find(
       (countryData) => countryData.name === country
-    );
+    )
     if (!target) {
       throw new Error("Country not found");
     }
@@ -215,5 +193,34 @@ export async function getCountryCode(country) {
     throw error;
   }
 }
+
+export async function getCoords(cityName) {
+  try {
+    const url = `https://api.positionstack.com/v1/forward?access_key=${AN_API_KEY}&query=${encodeURIComponent(cityName)}`;
+    const response = await fetch(url);
+    if (response.ok) {
+      const data = await response.json();
+      if (data.data.length > 0) {
+        const { latitude, longitude } = data.data[0];
+        return { latitude, longitude };
+      } else {
+        console.log('No results found.');
+      }
+    } else {
+      console.log(`Error: ${response.status}`);
+    }
+  } catch (error) {
+    console.log('An error occurred:', error);
+  }
+
+  return null;
+}
+
+
+
+
+
+
+
 
 //Sources, so I don't forget later: https://www.airnow.gov/sites/default/files/2020-05/aqi-technical-assistance-document-sept2018.pdf, https://forum.airnowtech.org/t/the-aqi-equation/169
