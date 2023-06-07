@@ -5,7 +5,7 @@ import "./MainView.css";
 import PollutantList from "../Pollutants/PollutantList";
 import PollutantDetails from "../Pollutants/PollutantDetails";
 import TopCountries from "../TopCountries/TopCountries";
-import { getCityData, getCountryData } from "../../api";
+import { getCityData, getCountryData, getLocationData } from "../../api";
 import { WorldMap } from "../Map/WorldMap";
 
 const MainView = () => {
@@ -31,6 +31,16 @@ const MainView = () => {
         searchedType: searchType,
       },
     });
+    if(searchType === 'city'){
+      const data = await getCityData(searchValue);
+      console.log(data);
+    } else if (searchType === 'country') {
+      const data = await getCountryData(searchValue);
+      console.log(data);
+    } else {
+      const data = await getLocationData(searchValue);
+      console.log(data);
+    }
   };
 
   return (
