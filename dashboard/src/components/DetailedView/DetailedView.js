@@ -5,7 +5,7 @@ import "./DetailedView.css";
 import PollutantDetails from "../Pollutants/PollutantDetails";
 import PollutantList from "../Pollutants/PollutantList";
 import DetailedChart from "../Charts/DetailedChart";
-import { getCityData, getCountryData } from "../../api";
+import { getCityData, getCountryData, getLocationData } from "../../api";
 import { NewDetailedChart } from "../Charts/NewDetailedChart";
 
 const DetailedView = () => {
@@ -50,11 +50,12 @@ const DetailedView = () => {
   };
 
   const incomingState = async () => {
-    if (searchType === "city") {
+    fetchData(getLocationData)
+    /* if (searchType === "city") {
       await fetchData(getCityData);
     } else if (searchType === "country") {
       await fetchData(getCountryData);
-    }
+    } */
   };
 
   useEffect(() => {

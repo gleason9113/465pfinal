@@ -1,46 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import "./MainView.css";
 import PollutantList from "../Pollutants/PollutantList";
 import PollutantDetails from "../Pollutants/PollutantDetails";
 import TopCountries from "../TopCountries/TopCountries";
-import { getCityData, getCountryData, getLocationData } from "../../api";
+import { getLocationData } from "../../api";
 import { WorldMap } from "../Map/WorldMap";
+import { countryList, pollutantIDs, pollutantList } from "../../config";
 
 const MainView = () => {
   const navigate = useNavigate();
   const [selectedPollutant, setSelectedPollutant] = useState("");
+  const [mapPollutant, setMapPollutant] = useState("");
   const [searchValue, setSearchValue] = useState("");
-  const [searchType, setSearchType] = useState("");
-
-  const searchOptions = [
-    { value: "", label: "Select search parameter" },
-    { value: "city", label: "City" },
-    { value: "country", label: "Country" },
-  ];
-
-  const handleChange = (event) => {
-    setSearchType(event.target.value);
-  };
 
   const onSearchButtonClick = async () => {
     navigate("/detailed", {
       state: {
         searchedValue: searchValue,
-        searchedType: searchType,
       },
     });
-    if(searchType === 'city'){
-      const data = await getCityData(searchValue);
-      console.log(data);
-    } else if (searchType === 'country') {
-      const data = await getCountryData(searchValue);
-      console.log(data);
-    } else {
-      const data = await getLocationData(searchValue);
-      console.log(data);
-    }
   };
 
   return (
@@ -79,21 +59,10 @@ const MainView = () => {
               type="text"
               placeholder="Search..."
             />
-            <select
-              className="search-select"
-              value={searchType}
-              onChange={handleChange}
-            >
-              {searchOptions.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </select>
             <button
               className="search-btn"
               onClick={onSearchButtonClick}
-              disabled={!searchType}
+              disabled={!searchValue}
             >
               Search
             </button>
@@ -105,7 +74,7 @@ const MainView = () => {
                 <div className="pollutant-details-container">
                   <PollutantDetails selectedPollutant={selectedPollutant} />
 
-                  <TopCountries selectedPollutant={selectedPollutant} />
+                  <TopCountries selectedPollutant={mapPollutant} />
                 </div>
               </div>
             </div>
