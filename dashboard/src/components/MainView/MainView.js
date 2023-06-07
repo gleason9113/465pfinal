@@ -21,14 +21,11 @@ const MainView = ({ allPollutants = [] }) => {
   ];
 
   const onSearchButtonClick = async () => {
-    navigate("/detailed", {
-      state: {
-        searchedValue: searchValue,
-        searchedType: searchType,
-        allPollutants: allPollutants
-      }
-    });
-  }
+    const result = await getCityData(searchedCity).then(
+      (response) => response.results
+    );
+    setCityData(result[0]);
+  };
 
   const handleChange = (event) => {
     setSearchType(event.target.value);
@@ -52,21 +49,16 @@ const MainView = ({ allPollutants = [] }) => {
       <div className="main-container">
         <div className="list-and-detail-container">
           <div className="pollutant-select-container">
-            <PollutantList
-              pollutants={allPollutants}
-              onPollutantSelect={id => {
-                const currPollutant = allPollutants.filter(pollutant => Number(pollutant.id) === Number(id));
-                setSelectedPollutant(currPollutant[0]);
-              }}
-            />
+            <PollutantList onPollutantSelect={setSelectedPollutant} />
             <div className="pollutant-details-container">
-              <PollutantDetails pollutant={selectedPollutant} />
-              <TopCountries />
+              <PollutantDetails selectedPollutant={selectedPollutant} />
+              <TopCountries selectedPollutant={selectedPollutant} />
             </div>
           </div>
         </div>
 
         <div className="main-map-container">
+
           <div className="search-box detail-search-box">
             <select value={searchType} onChange={handleChange}>
               {searchOptions.map(option => (
