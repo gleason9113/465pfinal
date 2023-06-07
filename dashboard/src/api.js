@@ -25,7 +25,19 @@ export const getCityData = async (city) => {
       throw new Error(`Failed to fetch data for ${city}: ${response.status}  ${response.statusText}`);
     }
     const data = await response.json();
-    return data;
+    let index = null;
+    if(data.results) {
+      for (let i = 0; i < data.results.length; i++) {
+        if(!index || data.results[i].measurements.length > index){
+          index = i;
+        }
+      }
+    }
+    if(index) {
+      return data.results[index];
+    } else {
+      return data;
+    }
   } catch (error) {
     console.log(`An error occurred: ${error}`);
     throw error;
@@ -70,7 +82,9 @@ export const getCountryData = async (country) => {
       throw new Error(`Failed to fetch data for ${country}: ${response.status}  ${response.statusText}`);
     }
     const data = await response.json();
-    const targetCountry = data.results.filter((countryData) => countryData.name === country);
+
+    const targetCountry = data.results.find((countryData) => countryData.country === countryCode); //Returns the 1st match in the response
+    console.log(targetCountry);
     return targetCountry;
   } catch (error) {
     console.log(`An error occurred: ${error}`);
@@ -156,7 +170,7 @@ export async function getAllPollutants() {
 
 export async function getCountryCode(country) {
   try {
-    const url = 'https://api.openaq.org/v2/countries?limit=200';
+    const url = 'https://api.openaq.org/v2/countries';
     const response = await fetch(url);
     if (!response.ok) {
       throw new Error(`Failed to fetch country data: ${response.status} ${response.statusText}`);

@@ -6,6 +6,8 @@ import MapChart from "../Map/Map";
 import PollutantList from "../Pollutants/PollutantList";
 import PollutantDetails from "../Pollutants/PollutantDetails";
 import TopCountries from "../TopCountries/TopCountries";
+import { getCityData, getCountryData } from "../../api";
+
 
 const MainView = ({ allPollutants = [] }) => {
   const navigate = useNavigate();
@@ -21,15 +23,17 @@ const MainView = ({ allPollutants = [] }) => {
   ];
 
   const onSearchButtonClick = async () => {
-    const result = await getCityData(searchedCity).then(
-      (response) => response.results
-    );
-    setCityData(result[0]);
-  };
 
-  const handleChange = (event) => {
-    setSearchType(event.target.value);
-  };
+    const countryResponse = await getCountryData("Mexico");
+    console.log(countryResponse);
+    const cityResponse = await getCityData("London");
+    console.log(cityResponse);
+    const result = await getCityData(searchedCity)
+      .then(response => response.results);
+    setCityData(result[0]); //getCityData will now return either an element of the results array (station w the highest # of recorded parameters)
+    //or the response as a whole if the results array is empty or missing - this needs to be adjusted as a result.
+  }
+
 
   return (
     <div className="main-view">
