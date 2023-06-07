@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
+import { getAQIValue } from "../../utils/AQICalculation";
 import "./TopCountries.css";
 
 const data = [
-  { name: "Finland", flag: "🇫🇮", aqi: 20 },
-  { name: "Sweden", flag: "🇸🇪", aqi: 25 },
-  { name: "Norway", flag: "🇳🇴", aqi: 30 },
-  { name: "Iceland", flag: "🇮🇸", aqi: 35 },
-  { name: "Estonia", flag: "🇪🇪", aqi: 40 },
+  { name: "Finland", flag: "🇫🇮" },
+  { name: "Sweden", flag: "🇸🇪" },
+  { name: "Norway", flag: "🇳🇴" },
+  { name: "Iceland", flag: "🇮🇸" },
+  { name: "Estonia", flag: "🇪🇪" },
 ];
+
+const countries = ["Finland", "Sweden", "Norway", "Iceland", "Estonia"];
 
 const pollutantList = [
   "Humidity",
@@ -26,6 +29,35 @@ const pollutantList = [
 
 const TopCountries = ({ selectedPollutant }) => {
   const [currentPollutant, setCurrentPollutant] = useState("Humidity");
+  const [aqiValues, setAqiValues] = useState([]);
+
+  useEffect(() => {
+    const getAQIValues = async () => {
+      try {
+        const data = [];
+        for (let country of countries) {
+          console.log("Country: ", country);
+          let aqi = await getAQIValue(country);  
+          console.log("AQI: ", aqi);
+          let result =  { name: country, flag: "🇫🇮", aqi: aqi };
+          data.push(result);
+          console.log("Data: ", data);  
+        }
+
+        data.push(test);
+        console.log("Test: ", test);
+        setAqiValues(data);  
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+  getAQIValues();
+ // console.log("AQIs: ", aqiValues);
+  }, []);
+
+  useEffect(() => {
+    console.log("Updated: ", aqiValues);
+    }, [aqiValues]);
 
   useEffect(() => {
     if (selectedPollutant) {

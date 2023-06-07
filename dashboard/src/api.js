@@ -146,20 +146,18 @@ export async function getAllPollutants() {
 
 export async function getCountryCode(country) {
   try {
-    console.log("getCountryCode called!");
-    console.log(country);
-    const url = 'https://api.openaq.org/v2/countries';
+  //  console.log("getCountryCode called: ", country);
+    const url = 'https://api.openaq.org/v2/countries?limit=200';
     const response = await fetch(url);
     if (!response.ok) {
       throw new Error(`Failed to fetch country data: ${response.status} ${response.statusText}`);
     }
     const data = await response.json();
-    console.log(data);
+   // console.log(data);
     const target = data.results.find((countryData) => countryData.name === country);
     if (!target) {
-      throw new Error('Country not found');
+      throw new Error(`Country ${country} not found: ${response.status} ${response.statusText}`);
     }
-
     return target.code;
   } catch (error) {
     console.log(`An error occurred: ${error}`);
