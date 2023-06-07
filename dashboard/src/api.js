@@ -20,32 +20,7 @@ export const getCountries = async () => {
 
 export const getCityData = async (city) => {
   try {
-    console.log("getCityData called!");
-    const { latitude, longitude } = await getCoords(city);
-    if (latitude && longitude) {
-      console.log("Back!", latitude, longitude);
-    }
-    const radius = 5000;
-    const url = `https://api.openaq.org/v2/latest?limit=100&coordinates=${encodeURIComponent(latitude)},${encodeURIComponent(longitude)}&radius=${encodeURIComponent(radius)}`;
-    console.log(url);
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error(`Failed to fetch data for ${city}: ${response.status}  ${response.statusText}`);
-    }
-    const data = await response.json();
-    let index = null;
-    if (data.results) {
-      for (let i = 0; i < data.results.length; i++) {
-        if (!index || data.results[i].measurements.length > index) {
-          index = i;
-        }
-      }
-    }
-    if (index) {
-      return data.results[index];
-    } else {
-      return data;
-    }
+    return getLocationData(city);
   } catch (error) {
     console.log(`An error occurred: ${error}`);
     throw error;
@@ -54,18 +29,7 @@ export const getCityData = async (city) => {
 
 export const getCountryData = async (country) => {
   try {
-    console.log("getCountryData called!");
-    const countryCode = await getCountryCode(country);
-    const response = await fetch(`https://api.openaq.org/v2/latest?limit=500&country=${countryCode}`);
-    if (!response.ok) {
-      throw new Error(`Failed to fetch data for ${country}: ${response.status}  ${response.statusText}`);
-    }
-    const data = await response.json();
-    console.log(data);
-    const targetCountry = data.results.find((countryData) => countryData.country === countryCode); //Returns the 1st match in the response
-    console.log(countryCode);
-    console.log(targetCountry);
-    return targetCountry;
+    return getLocationData(country);
   } catch (error) {
     console.log(`An error occurred: ${error}`);
     throw error;
@@ -199,7 +163,7 @@ export async function getLocationData(location) {
 
 export async function getCoords(cityName) {
   try {
-    const url = `https://api.positionstack.com/v1/forward?access_key=${AN_API_KEY}&query=${encodeURIComponent(cityName)}`;
+    const url = `http://api.positionstack.com/v1/forward?access_key=${AN_API_KEY}&query=${encodeURIComponent(cityName)}`;
     const response = await fetch(url);
     if (response.ok) {
       const data = await response.json();

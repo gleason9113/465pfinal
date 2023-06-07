@@ -22,7 +22,6 @@
     "react-google-charts": "^4.0.0",
     "react-leaflet": "^4.2.1",
     "react-router-dom": "^6.11.2",
-    "react-scripts": "^5.0.1",
     "react-simple-maps": "^3.0.0",
     "three": "^0.152.2",
     "victory": "^36.6.10",
@@ -53,6 +52,7 @@
     ]
   },
   "devDependencies": {
-    "fs": "^0.0.1-security"
+    "fs": "^0.0.1-security",
+    "react-scripts": "^5.0.1"
   }
 }
