@@ -132,11 +132,11 @@ export async function getCountryCode(country) {
   }
 }
 
-export async function getLocationData(location) {
+export async function getLocationData(location, parameter = "") {
   try {
     const { latitude, longitude } = await getCoords(location);
     const radius = 5000;
-    const url = `https://api.openaq.org/v2/latest?limit=100&coordinates=${encodeURIComponent(latitude)},${encodeURIComponent(longitude)}&radius=${encodeURIComponent(radius)}`;
+    const url = parameter !== "" ? `https://api.openaq.org/v2/latest?parameter=${encodeURIComponent(parameter)}&limit=100&coordinates=${encodeURIComponent(latitude)},${encodeURIComponent(longitude)}&radius=${encodeURIComponent(radius)}` : `https://api.openaq.org/v2/latest?limit=100&coordinates=${encodeURIComponent(latitude)},${encodeURIComponent(longitude)}&radius=${encodeURIComponent(radius)}`;
     const response = await fetch(url);
     if (!response.ok) {
       throw new Error(`Failed to fetch data for ${location}: ${response.status}  ${response.statusText}`);

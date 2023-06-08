@@ -1,17 +1,14 @@
 import React from "react";
 import { Chart } from "react-google-charts";
 
-export const data = [
-  ["Country", "Popularity"],
-  ["Germany", 300],
-  ["United States", 300],
-  ["Brazil", 400],
-  ["Canada", 500],
-  ["France", 600],
-  ["RU", 700],
-];
+export function WorldMap({ countryList }) {
+  const data = [['Country', 'Value']];
 
-export function WorldMap() {
+  // Convert countryList from array of objects to array of arrays
+  countryList.forEach((country) => {
+    data.push([country.country, country.value]);
+  });
+
   return (
     <Chart
       chartEvents={[
