@@ -6,7 +6,6 @@ const PollutantList = ({ onPollutantSelect }) => {
   const [selectedPollutant, setSelectedPollutant] = useState();
 
   const handleChange = (e) => {
-    console.log(e.target.value)
     setSelectedPollutant(e.target.value);
     onPollutantSelect(e.target.value);
   };

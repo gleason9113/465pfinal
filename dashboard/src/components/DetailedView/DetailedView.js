@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import "./DetailedView.css";
 import PollutantDetails from "../Pollutants/PollutantDetails";
@@ -8,6 +8,7 @@ import { getLocationData } from "../../api";
 import { NewDetailedChart } from "../Charts/NewDetailedChart";
 
 const DetailedView = () => {
+  const navigate = useNavigate();
   const location = useLocation();
   const [selectedPollutant, setSelectedPollutant] = useState("");
   const [searchValue, setSearchValue] = useState("");
@@ -36,7 +37,6 @@ const DetailedView = () => {
 
   useEffect(() => {
     if (location.state) {
-      console.log(location.state.searchedValue)
       setSearchValue(location.state.searchedValue);
     }
   }, []);
@@ -47,6 +47,14 @@ const DetailedView = () => {
     }
   }, [searchValue]);
 
+  const onHistoricalButtonClick = async () => {
+    navigate("/historical", {
+      state: {
+        searchedValue: searchValue,
+      },
+    });
+  };
+
   return (
     <>
       <nav className="mv-navbar">
@@ -56,16 +64,6 @@ const DetailedView = () => {
             <li className="mv-nav-list-item">
               <Link className="mv-nav-link" to="/">
                 Main
-              </Link>
-            </li>
-            <li className="mv-nav-list-item">
-              <Link className="mv-nav-link" to="/detailed">
-                Detailed
-              </Link>
-            </li>
-            <li className="mv-nav-list-item">
-              <Link className="mv-nav-link" to="/historical">
-                Historical
               </Link>
             </li>
           </ul>
@@ -79,6 +77,15 @@ const DetailedView = () => {
               <div className="pollutant-select-container">
                 <PollutantList onPollutantSelect={setSelectedPollutant} />
                 <PollutantDetails selectedPollutant={selectedPollutant} />
+              </div>
+              <div>
+                <button
+                  className="search-btn"
+                  onClick={onHistoricalButtonClick}
+                  disabled={!searchValue}
+                >
+                  Historical Data
+                </button>
               </div>
             </div>
             <div className="main-map-container">

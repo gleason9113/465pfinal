@@ -58,23 +58,6 @@ export const getCurrentData = async () => {
   }
 };
 
-export const getDateRange = async (startDate, endDate, location, type) => {
-  try {
-    // construct the URL
-    const url = `https://api.openaq.org/v2/measurements?date_from=${encodeURIComponent(startDate)}&date_to=${encodeURIComponent(endDate)}&${encodeURIComponent(type)}=${encodeURIComponent(location)}`;
-
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error(`Failed to fetch data for ${location} between ${startDate} and ${endDate}: ${response.status}  ${response.statusText}`);
-    }
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.log(`An error occurred: ${error}`);
-    throw error;
-  }
-};
-
 export const getAllCities = async () => {
   try {
     const response = await fetch("https://api.openaq.org/v2/cities?limit=2000");
@@ -131,6 +114,25 @@ export async function getCountryCode(country) {
     throw error;
   }
 }
+
+export const getDateRange = async (startDate, endDate, location, parameter) => {
+  try {
+    const { latitude, longitude } = await getCoords(location);
+    const radius = 5000;
+    // construct the URL
+    const url = `https://api.openaq.org/v2/measurements?date_from=${encodeURIComponent(startDate)}&date_to=${encodeURIComponent(endDate)}&limit=100&page=1&offset=0&sort=desc&parameter_id=${encodeURIComponent(parameter)}&coordinates=${encodeURIComponent(latitude)},${encodeURIComponent(longitude)}&radius=${encodeURIComponent(radius)}&order_by=datetime`;
+
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch data for ${location} between ${startDate} and ${endDate}: ${response.status}  ${response.statusText}`);
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(`An error occurred: ${error}`);
+    throw error;
+  }
+};
 
 export async function getLocationData(location, parameter = "") {
   try {
