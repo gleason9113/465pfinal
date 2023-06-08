@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import "./HistoricalView.css";
 import HistoricalForm from "../Forms/HistoricalForm";
@@ -8,14 +8,30 @@ import PollutantDetails from "../Pollutants/PollutantDetails";
 import PollutantList from "../Pollutants/PollutantList";
 import { NewHistoricalChart } from "../Charts/NewHistoricalChart";
 
-const HistoricalView = ({ allPollutants = [] }) => {
+const HistoricalView = ({ }) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const [searchValue, setSearchValue] = useState("");
   const [selectedPollutant, setSelectedPollutant] = useState("");
-  const [locationData, setLocationData] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [locationData, setLocationData] = useState([]);
 
   const handleFormSubmit = (data) => {
     setLocationData(data);
-    setLoading(true);
+  };
+
+  useEffect(() => {
+    if (location.state) {
+      setSearchValue(location.state.searchedValue);
+    }
+  }, []);
+
+  const onDetailedButtonClick = async () => {
+    navigate("/detailed", {
+      state: {
+        searchedValue: searchValue,
+      },
+    });
   };
 
   return (
@@ -29,16 +45,6 @@ const HistoricalView = ({ allPollutants = [] }) => {
                 Main
               </Link>
             </li>
-            <li className="mv-nav-list-item">
-              <Link className="mv-nav-link" to="/detailed">
-                Detailed
-              </Link>
-            </li>
-            <li className="mv-nav-list-item">
-              <Link className="mv-nav-link" to="/historical">
-                Historical
-              </Link>
-            </li>
           </ul>
         </div>
       </nav>
@@ -50,12 +56,22 @@ const HistoricalView = ({ allPollutants = [] }) => {
               <div className="pollutant-select-container">
                 <PollutantList onPollutantSelect={setSelectedPollutant} />
                 <PollutantDetails selectedPollutant={selectedPollutant} />
-                <HistoricalForm onSubmit={handleFormSubmit} />
+                <HistoricalForm selectedPollutant={selectedPollutant} searchedValue={searchValue} onSubmit={handleFormSubmit} />
+              </div>
+
+              <div>
+                <button
+                  className="search-btn"
+                  onClick={onDetailedButtonClick}
+                  disabled={!searchValue}
+                >
+                  Historical Data
+                </button>
               </div>
             </div>
             <div className="main-map-container">
               {/* <HistoricalChart locationData={locationData} /> */}
-              <NewHistoricalChart />
+              {(locationData.length > 0) && <NewHistoricalChart locationData={locationData} />}
             </div>
           </div>
         </div>

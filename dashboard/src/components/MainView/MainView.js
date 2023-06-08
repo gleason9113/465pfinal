@@ -46,7 +46,6 @@ const MainView = () => {
     let timer;
     if (selectedPollutant) {
       const newPollutant = pollutantList.find(pollutant => pollutant.name === selectedPollutant)
-      console.log(newPollutant)
       updatePollutantValues(newPollutant);
     } else {
       let counter = 0;

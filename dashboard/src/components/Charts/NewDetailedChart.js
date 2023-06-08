@@ -9,10 +9,8 @@ export const options = {
 };
 
 export function NewDetailedChart({ pollutantData = [] }) {
-  console.log()
   const data = [['Pollutant', ' ']];
 
-  // Convert countryList from array of objects to array of arrays
   pollutantData.forEach((Pollutant) => {
     data.push([Pollutant.name, Pollutant.value]);
   });
