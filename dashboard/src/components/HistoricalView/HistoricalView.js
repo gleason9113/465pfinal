@@ -65,7 +65,7 @@ const HistoricalView = ({ }) => {
                   onClick={onDetailedButtonClick}
                   disabled={!searchValue}
                 >
-                  Historical Data
+                  Detailed Data
                 </button>
               </div>
             </div>
