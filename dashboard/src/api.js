@@ -136,7 +136,7 @@ export async function getLocationData(location, parameter = "") {
   try {
     const { latitude, longitude } = await getCoords(location);
     const radius = 5000;
-    const url = parameter !== "" ? `https://api.openaq.org/v2/latest?limit=1&parameter=${encodeURIComponent(radius)}&radius=${encodeURIComponent(radius)}limit=100&coordinates=${encodeURIComponent(latitude)},${encodeURIComponent(longitude)}&radius=${encodeURIComponent(radius)}` : `https://api.openaq.org/v2/latest?limit=100&coordinates=${encodeURIComponent(latitude)},${encodeURIComponent(longitude)}&radius=${encodeURIComponent(radius)}`;
+    const url = parameter !== "" ? `https://api.openaq.org/v2/latest?parameter=${encodeURIComponent(parameter)}&limit=100&coordinates=${encodeURIComponent(latitude)},${encodeURIComponent(longitude)}&radius=${encodeURIComponent(radius)}` : `https://api.openaq.org/v2/latest?limit=100&coordinates=${encodeURIComponent(latitude)},${encodeURIComponent(longitude)}&radius=${encodeURIComponent(radius)}`;
     const response = await fetch(url);
     if (!response.ok) {
       throw new Error(`Failed to fetch data for ${location}: ${response.status}  ${response.statusText}`);
@@ -162,7 +162,6 @@ export async function getLocationData(location, parameter = "") {
 }
 
 export async function getCoords(cityName) {
-  console.log(AN_API_KEY)
   try {
     const url = `http://api.positionstack.com/v1/forward?access_key=${AN_API_KEY}&query=${encodeURIComponent(cityName)}`;
     const response = await fetch(url);
