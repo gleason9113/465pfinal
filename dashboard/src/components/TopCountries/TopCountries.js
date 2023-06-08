@@ -14,7 +14,7 @@ const TopCountries = ({ countryList }) => {
         {countryList.map((country) => (
           <li key={country.name} className="country-item">
             <span className="country-flag">{country.flag}</span>
-            <span className="country-name">{country.name}:</span>
+            <span className="country-name">{country.country}:</span>
             <span className="country-aqi">
               {" "}
               {country.value} {country.pollutant}
