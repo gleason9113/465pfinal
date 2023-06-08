@@ -2,21 +2,6 @@ import React, { useState } from "react";
 import { pollutantList } from "../../utils/CountryData";
 import "./PollutantList.css";
 
-/* const pollutants = [
-  "Humidity",
-  "PM1",
-  "PM10",
-  "PM25",
-  "Pressure",
-  "Temperature C",
-  "Temperature F",
-  "CO (PPM)",
-  "CO2 (PPM)",
-  "CH4 (PPM)",
-  "NO2 (PPB)",
-  "Ozone (PPB)",
-]; */
-
 const PollutantList = ({ onPollutantSelect }) => {
   const [selectedPollutant, setSelectedPollutant] = useState();
 

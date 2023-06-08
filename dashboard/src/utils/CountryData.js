@@ -1,9 +1,9 @@
 export const countryList = [
-  { name: "Portland", flag: "🇺🇸", pollutant: "humidity", value: Number(0) },
-  { name: "Zapopan", flag: "🇲🇽", pollutant: "humidity", value: Number(0) },
-  { name: "QUEBEC", flag: "🇨🇦", pollutant: "humidity", value: Number(0) },
-  { name: "Thurrock", flag: "🇬🇧", pollutant: "humidity", value: Number(0) },
-  { name: "Beijing", flag: "🇨🇳", pollutant: "humidity", value: Number(0) },
+  { name: "Portland", country: "United States", flag: "🇺🇸", pollutant: "humidity", value: Number(0) },
+  { name: "Zapopan", country: "Mexico", flag: "🇲🇽", pollutant: "humidity", value: Number(0) },
+  { name: "QUEBEC", country: "Canada", flag: "🇨🇦", pollutant: "humidity", value: Number(0) },
+  { name: "Thurrock", country: "England", flag: "🇬🇧", pollutant: "humidity", value: Number(0) },
+  { name: "Beijing", country: "China", flag: "🇨🇳", pollutant: "humidity", value: Number(0) },
 ];
 
 export const pollutantList = [
