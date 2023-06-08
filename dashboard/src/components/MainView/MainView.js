@@ -67,13 +67,11 @@ const MainView = () => {
   }, [currentPollutant]);
 
   const onSearchButtonClick = async () => {
-    /* navigate("/detailed", {
+    navigate("/detailed", {
       state: {
         searchedValue: searchValue,
       },
-    }); */
-    const data = await getLocationData(searchValue);
-    console.log(data);
+    });
   };
 
   return (
