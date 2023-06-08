@@ -2,9 +2,8 @@ import React from "react";
 import { Chart } from "react-google-charts";
 
 export function WorldMap({ countryList }) {
-  const data = [['Country', 'Value']];
+  const data = [["Country", "Value"]];
 
-  // Convert countryList from array of objects to array of arrays
   countryList.forEach((country) => {
     data.push([country.country, country.value]);
   });
@@ -28,7 +27,7 @@ export function WorldMap({ countryList }) {
       height="100%"
       data={data}
       options={{
-        colorAxis: { colors: ['#625c5c'] }  // Set color to blue
+        colorAxis: { colors: ["#625c5c"] }, // Set color to blue
       }}
     />
   );

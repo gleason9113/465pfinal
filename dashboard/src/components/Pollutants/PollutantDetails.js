@@ -2,9 +2,10 @@ import React from "react";
 import { pollutantList } from "../../utils/CountryData";
 import "./PollutantDetails.css";
 
-
 const PollutantDetails = ({ selectedPollutant }) => {
-  const details = pollutantList.find(pollutant => pollutant.name === selectedPollutant);
+  const details = pollutantList.find(
+    (pollutant) => pollutant.name === selectedPollutant
+  );
 
   if (!details) {
     return (

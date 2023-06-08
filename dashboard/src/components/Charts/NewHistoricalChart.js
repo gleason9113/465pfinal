@@ -5,11 +5,11 @@ export const options = {
   chart: {
     title: "Pollutant Over Time",
   },
-  legend: { position: 'none' },
+  legend: { position: "none" },
 };
 
 export function NewHistoricalChart({ locationData }) {
-  const data = [['Date', 'Value']];
+  const data = [["Date", "Value"]];
 
   locationData.forEach((Pollutant) => {
     data.push([new Date(Pollutant.date), Pollutant.value]);

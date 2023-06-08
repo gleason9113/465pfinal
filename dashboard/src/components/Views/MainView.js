@@ -25,27 +25,32 @@ const MainView = () => {
     if (response.results) {
       const pollutantValue = response.results.reduce((acc, result) => {
         let value;
-        const matchingMeasurement = result.measurements.find(m => m.parameter === pollutant.apiName);
+        const matchingMeasurement = result.measurements.find(
+          (m) => m.parameter === pollutant.apiName
+        );
         if (matchingMeasurement) {
           value = matchingMeasurement.value;
         }
         return Number(value);
       }, 0);
-      return updateCountry(country, pollutant, pollutantValue)
+      return updateCountry(country, pollutant, pollutantValue);
     } else {
-      return updateCountry(country, pollutant, 0)
+      return updateCountry(country, pollutant, 0);
     }
   };
 
   const updatePollutantValues = (pollutant) => {
-    Promise.all(currCountryList.map(country => fetchData(country, pollutant)))
-      .then(newCountryList => setCountryList(newCountryList));
+    Promise.all(
+      currCountryList.map((country) => fetchData(country, pollutant))
+    ).then((newCountryList) => setCountryList(newCountryList));
   };
 
   useEffect(() => {
     let timer;
     if (selectedPollutant) {
-      const newPollutant = pollutantList.find(pollutant => pollutant.name === selectedPollutant)
+      const newPollutant = pollutantList.find(
+        (pollutant) => pollutant.name === selectedPollutant
+      );
       updatePollutantValues(newPollutant);
     } else {
       let counter = 0;
