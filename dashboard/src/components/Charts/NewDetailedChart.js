@@ -5,11 +5,12 @@ export const options = {
   chart: {
     title: "Pollutant Levels",
   },
+  legend: { position: 'none' },
 };
 
 export function NewDetailedChart({ pollutantData = [] }) {
   console.log()
-  const data = [['Pollutant', 'Value']];
+  const data = [['Pollutant', ' ']];
 
   // Convert countryList from array of objects to array of arrays
   pollutantData.forEach((Pollutant) => {
