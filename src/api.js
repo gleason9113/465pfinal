@@ -195,7 +195,7 @@ export async function getLocationData(location, parameter = "") {
 
 export async function getCoords(cityName) {
   try {
-    const url = `https://api.positionstack.com/v1/forward?access_key=${AN_API_KEY}&query=${encodeURIComponent(
+    const url = `http://api.positionstack.com/v1/forward?access_key=${AN_API_KEY}&query=${encodeURIComponent(
       cityName
     )}`;
     const response = await fetch(url);
