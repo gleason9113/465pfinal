@@ -1,7 +1,7 @@
 {
   "name": "dashboard",
   "version": "0.1.0",
-  "homepage": "https://gleason9113.github.io/465pfinal",
+  "homepage": "https://gleason9113.github.io/",
   "private": true,
   "dependencies": {
     "@react-leaflet/core": "^2.1.0",
