@@ -19,7 +19,7 @@ function App() {
     fetchAllPollutants();
   }, []);
   return (
-    <Router>
+    <Router basename="465pfinal">
       <Routes>
         <Route
           path="/detailed"
