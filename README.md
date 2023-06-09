@@ -66,11 +66,20 @@ This file contains the styles for the form used in the historical view to input 
 
 ## API
 
-The application uses the [OpenAQ API](https://docs.openaq.org/) to fetch air quality data across the globe. The main API endpoints used are:
+The application uses the [OpenAQ API](https://docs.openaq.org/) to fetch air quality data across the globe. This is assisted by using the
+positionstack API (https://positionstack.com/documentation) for forward geocoding. An API key for this latter is required. This should be stored in /src/config.js and exported as AN_API_KEY. No further configuration is needed. The main API endpoints used are:
 
-- 1: ...
-- 2: ...
-- 3: ...
+OpenAQ API:
+
+1. Endpoint- /latest
+2. Parameters- latitude and longitude (required), pollutant (optional)
+
+PositionStack API:
+
+1. Endpoint- /forward
+2. Parameters- Location to find (string)
+
+Searching for locations is done by name; the application handles the API calls to locate the coordinates and fetch the current data.
 
 The application interacts with the OpenAQ API via multiple functions, each one serving a distinct purpose:
 
@@ -81,6 +90,7 @@ The application interacts with the OpenAQ API via multiple functions, each one s
 - getAllCities(): Fetches data for all the cities in the database.
 - getAllPollutants(): Fetches all pollutants data.
 - getCountryCode(country): Fetches the air quality data for a specific parameter and geographical location between two dates.
+
 ## React Hooks
 
 The application uses the useState and useEffect hooks for state management and side-effects respectively.
@@ -110,6 +120,5 @@ The following resources were consulted during the development of this applicatio
 3. Run npm start to start the application.
 
 ## Other Related Tutorials and Resources
+
 - [React Google Charts Calendar, Gantt, Geo, Wordtree](https://www.youtube.com/watch?v=oX7Wqavzoc0&t=680s)
-
-
