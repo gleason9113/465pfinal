@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
-import "./HistoricalView.css";
 import HistoricalForm from "../Forms/HistoricalForm";
-import HistoricalChart from "../Charts/HistoricalChart";
 import PollutantDetails from "../Pollutants/PollutantDetails";
 import PollutantList from "../Pollutants/PollutantList";
 import { NewHistoricalChart } from "../Charts/NewHistoricalChart";
 
-const HistoricalView = ({ }) => {
+const HistoricalView = ({}) => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -56,7 +54,11 @@ const HistoricalView = ({ }) => {
               <div className="pollutant-select-container">
                 <PollutantList onPollutantSelect={setSelectedPollutant} />
                 <PollutantDetails selectedPollutant={selectedPollutant} />
-                <HistoricalForm selectedPollutant={selectedPollutant} searchedValue={searchValue} onSubmit={handleFormSubmit} />
+                <HistoricalForm
+                  selectedPollutant={selectedPollutant}
+                  searchedValue={searchValue}
+                  onSubmit={handleFormSubmit}
+                />
               </div>
 
               <div>
@@ -70,8 +72,9 @@ const HistoricalView = ({ }) => {
               </div>
             </div>
             <div className="main-map-container">
-              {/* <HistoricalChart locationData={locationData} /> */}
-              {(locationData.length > 0) && <NewHistoricalChart locationData={locationData} />}
+              {locationData.length > 0 && (
+                <NewHistoricalChart locationData={locationData} />
+              )}
             </div>
           </div>
         </div>

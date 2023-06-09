@@ -12,7 +12,11 @@ const PollutantList = ({ onPollutantSelect }) => {
 
   return (
     <div className="pollutant-select-container">
-      <select className="pollutant-select" value={selectedPollutant} onChange={handleChange}>
+      <select
+        className="pollutant-select"
+        value={selectedPollutant}
+        onChange={handleChange}
+      >
         <option value="">Select a pollutant</option>
         {pollutantList.map((pollutant, key) => (
           <option className="pollutant-option" key={key} value={pollutant.name}>

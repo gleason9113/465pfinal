@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
-import "./DetailedView.css";
 import PollutantDetails from "../Pollutants/PollutantDetails";
 import PollutantList from "../Pollutants/PollutantList";
 import { getLocationData } from "../../api";
@@ -19,20 +18,22 @@ const DetailedView = () => {
       const response = await getDataFn(searchValue);
       if (response.measurements) {
         const measurements = response.measurements;
-        const pollutantValues = measurements.map(measurement => {
-          let pollutantData = { "name": measurement.parameter, "value": measurement.value };
+        const pollutantValues = measurements.map((measurement) => {
+          let pollutantData = {
+            name: measurement.parameter,
+            value: measurement.value,
+          };
           return pollutantData;
-        })
-        setFetchedLocationData(pollutantValues)
+        });
+        setFetchedLocationData(pollutantValues);
       }
-
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
 
   const incomingState = async () => {
-    fetchData(getLocationData)
+    fetchData(getLocationData);
   };
 
   useEffect(() => {

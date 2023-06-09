@@ -5,11 +5,11 @@ export const options = {
   chart: {
     title: "Pollutant Levels",
   },
-  legend: { position: 'none' },
+  legend: { position: "none" },
 };
 
 export function NewDetailedChart({ pollutantData = [] }) {
-  const data = [['Pollutant', ' ']];
+  const data = [["Pollutant", " "]];
 
   pollutantData.forEach((Pollutant) => {
     data.push([Pollutant.name, Pollutant.value]);
