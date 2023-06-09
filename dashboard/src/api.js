@@ -1,4 +1,3 @@
-
 import axios from "axios";
 import { AN_API_KEY } from "./config";
 
@@ -6,9 +5,11 @@ const apiURL = "https://api.openaq.org/v2";
 
 export const getCountries = async () => {
   try {
-    const response = await fetch('https://api.openaq.org/v2/latest');
+    const response = await fetch("https://api.openaq.org/v2/latest");
     if (!response.ok) {
-      throw new Error(`Failed to fetch countries: ${response.status}  ${response.statusText}`);
+      throw new Error(
+        `Failed to fetch countries: ${response.status}  ${response.statusText}`
+      );
     }
     const data = await response.json();
     return data;
@@ -41,7 +42,9 @@ export const getCurrentData = async () => {
     const url = "https://api.openaq.org/v2/latest?limit=6000";
     const response = await fetch(url);
     if (!response.ok) {
-      throw new Error(`Failed to fetch data: ${response.status}  ${response.statusText}`);
+      throw new Error(
+        `Failed to fetch data: ${response.status}  ${response.statusText}`
+      );
     }
     const data = await response.json();
     let currentData = {};
@@ -62,7 +65,9 @@ export const getAllCities = async () => {
   try {
     const response = await fetch("https://api.openaq.org/v2/cities?limit=2000");
     if (!response.ok) {
-      throw new Error(`Failed to fetch countries: ${response.status}  ${response.statusText}`);
+      throw new Error(
+        `Failed to fetch countries: ${response.status}  ${response.statusText}`
+      );
     }
     const data = await response.json();
     return data;
@@ -93,17 +98,17 @@ export async function getAllPollutants() {
 
 export async function getCountryCode(country) {
   try {
-    const url = "https://api.openaq.org/v2/countries"
+    const url = "https://api.openaq.org/v2/countries";
     const response = await fetch(url);
     if (!response.ok) {
       throw new Error(
         `Failed to fetch country data: ${response.status} ${response.statusText}`
       );
     }
-    const data = await response.json()
+    const data = await response.json();
     const target = data.results.find(
       (countryData) => countryData.name === country
-    )
+    );
     if (!target) {
       throw new Error("Country not found");
     }
@@ -120,11 +125,21 @@ export const getDateRange = async (startDate, endDate, location, parameter) => {
     const { latitude, longitude } = await getCoords(location);
     const radius = 5000;
     // construct the URL
-    const url = `https://api.openaq.org/v2/measurements?date_from=${encodeURIComponent(startDate)}&date_to=${encodeURIComponent(endDate)}&limit=100&page=1&offset=0&sort=desc&parameter_id=${encodeURIComponent(parameter)}&coordinates=${encodeURIComponent(latitude)},${encodeURIComponent(longitude)}&radius=${encodeURIComponent(radius)}&order_by=datetime`;
+    const url = `https://api.openaq.org/v2/measurements?date_from=${encodeURIComponent(
+      startDate
+    )}&date_to=${encodeURIComponent(
+      endDate
+    )}&limit=100&page=1&offset=0&sort=desc&parameter_id=${encodeURIComponent(
+      parameter
+    )}&coordinates=${encodeURIComponent(latitude)},${encodeURIComponent(
+      longitude
+    )}&radius=${encodeURIComponent(radius)}&order_by=datetime`;
 
     const response = await fetch(url);
     if (!response.ok) {
-      throw new Error(`Failed to fetch data for ${location} between ${startDate} and ${endDate}: ${response.status}  ${response.statusText}`);
+      throw new Error(
+        `Failed to fetch data for ${location} between ${startDate} and ${endDate}: ${response.status}  ${response.statusText}`
+      );
     }
     const data = await response.json();
     return data;
@@ -138,10 +153,25 @@ export async function getLocationData(location, parameter = "") {
   try {
     const { latitude, longitude } = await getCoords(location);
     const radius = 5000;
-    const url = parameter !== "" ? `https://api.openaq.org/v2/latest?parameter=${encodeURIComponent(parameter)}&limit=100&coordinates=${encodeURIComponent(latitude)},${encodeURIComponent(longitude)}&radius=${encodeURIComponent(radius)}` : `https://api.openaq.org/v2/latest?limit=100&coordinates=${encodeURIComponent(latitude)},${encodeURIComponent(longitude)}&radius=${encodeURIComponent(radius)}`;
+    const url =
+      parameter !== ""
+        ? `https://api.openaq.org/v2/latest?parameter=${encodeURIComponent(
+            parameter
+          )}&limit=100&coordinates=${encodeURIComponent(
+            latitude
+          )},${encodeURIComponent(longitude)}&radius=${encodeURIComponent(
+            radius
+          )}`
+        : `https://api.openaq.org/v2/latest?limit=100&coordinates=${encodeURIComponent(
+            latitude
+          )},${encodeURIComponent(longitude)}&radius=${encodeURIComponent(
+            radius
+          )}`;
     const response = await fetch(url);
     if (!response.ok) {
-      throw new Error(`Failed to fetch data for ${location}: ${response.status}  ${response.statusText}`);
+      throw new Error(
+        `Failed to fetch data for ${location}: ${response.status}  ${response.statusText}`
+      );
     }
     const data = await response.json();
     let index = null;
@@ -165,7 +195,9 @@ export async function getLocationData(location, parameter = "") {
 
 export async function getCoords(cityName) {
   try {
-    const url = `http://api.positionstack.com/v1/forward?access_key=${AN_API_KEY}&query=${encodeURIComponent(cityName)}`;
+    const url = `http://api.positionstack.com/v1/forward?access_key=${AN_API_KEY}&query=${encodeURIComponent(
+      cityName
+    )}`;
     const response = await fetch(url);
     if (response.ok) {
       const data = await response.json();
@@ -173,23 +205,16 @@ export async function getCoords(cityName) {
         const { latitude, longitude } = data.data[0];
         return { latitude, longitude };
       } else {
-        console.log('No results found.');
+        console.log("No results found.");
       }
     } else {
       console.log(`Error: ${response.status}`);
     }
   } catch (error) {
-    console.log('An error occurred:', error);
+    console.log("An error occurred:", error);
   }
 
   return null;
 }
-
-
-
-
-
-
-
 
 //Sources, so I don't forget later: https://www.airnow.gov/sites/default/files/2020-05/aqi-technical-assistance-document-sept2018.pdf, https://forum.airnowtech.org/t/the-aqi-equation/169
