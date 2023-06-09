@@ -1,7 +1,7 @@
 {
   "name": "dashboard",
   "version": "0.1.0",
-  "homepage": "https://CoreyPatrickPDX.github.io/465pfinal",
+  "homepage": "https://coreypatrickpdx.github.io/465pfinal",
   "private": true,
   "dependencies": {
     "@react-leaflet/core": "^2.1.0",
@@ -25,7 +25,6 @@
     "react-router-dom": "^6.11.2",
     "react-simple-maps": "^3.0.0",
     "three": "^0.152.2",
-    "victory": "^36.6.10",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

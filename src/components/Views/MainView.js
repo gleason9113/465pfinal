@@ -21,22 +21,27 @@ const MainView = () => {
   };
 
   const fetchData = async (country, pollutant) => {
-    const response = await getLocationData(country.name, currentPollutant.id);
-    if (response.results) {
-      const pollutantValue = response.results.reduce((acc, result) => {
-        let value;
-        const matchingMeasurement = result.measurements.find(
-          (m) => m.parameter === pollutant.apiName
-        );
-        if (matchingMeasurement) {
-          value = matchingMeasurement.value;
-        }
-        return Number(value);
-      }, 0);
-      return updateCountry(country, pollutant, pollutantValue);
+    try{
+      const response = await getLocationData(country.name, currentPollutant.id);
+      if (response.results) {
+        const pollutantValue = response.results.reduce((acc, result) => {
+          let value;
+          const matchingMeasurement = result.measurements.find(
+            (m) => m.parameter === pollutant.apiName
+          );
+          if (matchingMeasurement) {
+            value = matchingMeasurement.value;
+          }
+          return Number(value);
+        }, 0);
+        return updateCountry(country, pollutant, pollutantValue);
     } else {
       return updateCountry(country, pollutant, 0);
     }
+    }catch (error) {
+      console.error("Error fetching data:", error);
+    }
+    
   };
 
   const updatePollutantValues = (pollutant) => {
