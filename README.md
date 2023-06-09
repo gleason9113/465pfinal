@@ -1,124 +1,70 @@
-# Air Quality Dashboard
+# Getting Started with Create React App
 
-This project represents an air quality monitoring system that tracks various pollutants in different countries. The main interface provides a list of pollutants, detailed information about a selected pollutant, a list of top countries, and a world map.
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Main Components
+## Available Scripts
 
-### Main View
+In the project directory, you can run:
 
-`MainView.js` is the main file that brings all the components together. It fetches and displays data about various pollutants from different countries. You can also search for a specific city's pollutant data in the search bar.
+### `npm start`
 
-### Detailed View
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-`DetailedView.js` is the second file that brings all the components together for detailed pollutant data. It fetches and displays data about various pollutants from a searched location using the `getLocationData` function.The data, once fetched, is displayed in a `NewDetailedChart.js`. A Pollutant List and Pollutant Details are displayed alongside a detailed chart of pollutant levels in the selected location.
+The page will reload when you make changes.\
+You may also see any lint errors in the console.
 
-### Historical View
+### `npm test`
 
-`HistoricalView.js` is similar to `DetailedView.js`, but instead focuses on displaying historical data of pollutant levels from a selected location. It uses a `HistoricalForm` for users to input the desired data range. The data, once fetched, is displayed in a `NewHistoricalChart.js`.
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-## Key Components
+### `npm run build`
 
-### Pollutant List
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-`PollutantList.js` displays a list of pollutants. Clicking on a pollutant updates the `selectedPollutant` state in all views.
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
 
-### Pollutant Details
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-`PollutantDetails.js` displays detailed information about the selected pollutant.
+### `npm run eject`
 
-### Top Countries
+**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-`TopCountries.js` displays the countries with the best pollutant values.
+If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-### World Map
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-`WorldMap.js` displays a world map indicating the amount of pollutants in each country.
+You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-### Detailed Chart and Historical Chart
+## Learn More
 
-`NewDetailedChart.js` and `NewHistoricalChart.js` both components visualize the fetched pollutant data in a chart format.
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-### Historical Form
+To learn React, check out the [React documentation](https://reactjs.org/).
 
-`HistoricalForm.js` creates a form used in the historical view to input the desired data range.
+### Code Splitting
 
-## CSS
+This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-### MainView.css
+### Analyzing the Bundle Size
 
-This file contains the styles for all views, including the navbar, search box, map container, and pollutant list.
+This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
-### PollutantList.css
+### Making a Progressive Web App
 
-This file contains the styles for the list of pollutants.
+This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
 
-### PollutantDetails.css
+### Advanced Configuration
 
-This file contains the styles for the detailed information about the selected pollutant.
+This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
 
-### TopCountries.css
+### Deployment
 
-This file contains the styles for the countries with the best pollutant values.
+This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
 
-### HistoricalForm.css
+### `npm run build` fails to minify
 
-This file contains the styles for the form used in the historical view to input the desired data range.
-
-## API
-
-The application uses the [OpenAQ API](https://docs.openaq.org/) to fetch air quality data across the globe. This is assisted by using the
-positionstack API (https://positionstack.com/documentation) for forward geocoding. An API key for this latter is required. This should be stored in /src/config.js and exported as AN_API_KEY. No further configuration is needed. The main API endpoints used are:
-
-OpenAQ API:
-
-1. Endpoint- /latest
-2. Parameters- latitude and longitude (required), pollutant (optional)
-
-PositionStack API:
-
-1. Endpoint- /forward
-2. Parameters- Location to find (string)
-
-Searching for locations is done by name; the application handles the API calls to locate the coordinates and fetch the current data.
-
-The application interacts with the OpenAQ API via multiple functions, each one serving a distinct purpose:
-
-- getCountries(): Fetches the latest available air quality data for all countries.
-- getCityData(city): Fetches the air quality data for a specified city.
-- getCountryData(country): Fetches the air quality data for a specified country.
-- getCurrentData(): Fetches the current air quality data.
-- getAllCities(): Fetches data for all the cities in the database.
-- getAllPollutants(): Fetches all pollutants data.
-- getCountryCode(country): Fetches the air quality data for a specific parameter and geographical location between two dates.
-
-## React Hooks
-
-The application uses the useState and useEffect hooks for state management and side-effects respectively.
-
-## Dependencies
-
-This project utilizes the following outside libraries:
-
-- React Router: Used for setting up navigation between different components in the application.
-- React Router Dom: It is used to handle routing and navigation in the application.
-- Axios: Used for handling HTTP requests to the API.
-- React Google Charts: Used for rendering the map and charts based on pollutant data.
-
-### Tutorials and Resources
-
-The following resources were consulted during the development of this application:
-
-- [React documentation](https://legacy.reactjs.org/docs/getting-started.html): For understanding the fundamentals of React and its hook system.
-- [React Router Documentation](https://reactrouter.com/en/main): For implementing routing in the application.
-- [Using Axios with React](https://www.digitalocean.com/community/tutorials/react-axios-react): For fetching data from APIs.
-- [React Google Charts Documentation](https://www.react-google-charts.com/): For rendering the map and charts.
-
-## Installation
-
-1. Clone this repository.
-2. Run npm install to install all the dependencies.
-3. Run npm start to start the application.
-
-## Other Related Tutorials and Resources
-
-- [React Google Charts Calendar, Gantt, Geo, Wordtree](https://www.youtube.com/watch?v=oX7Wqavzoc0&t=680s)
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
